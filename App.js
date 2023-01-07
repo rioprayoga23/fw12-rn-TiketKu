@@ -5,10 +5,10 @@ import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
 const App = () => {
   return (
-    <SignUp />
+    // <SignUp />
     // <SignIn />
     // <ForgotPassword />
-    // <ResetPassword />
+    <ResetPassword />
   );
 };
 

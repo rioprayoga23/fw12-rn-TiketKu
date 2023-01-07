@@ -27,33 +27,36 @@ const SignIn = () => {
         />
         <View style={styles.form}>
           <Input
+            inputStyle={{color: 'white'}}
             placeholder="Write your email"
-            leftIcon={{type: 'feather', name: 'mail', color: 'green'}}
+            leftIcon={{type: 'feather', name: 'mail', color: '#28907D'}}
           />
           <Input
+            inputStyle={{color: 'white'}}
             placeholder="Write your password"
-            leftIcon={{type: 'feather', name: 'lock', color: 'green'}}
+            leftIcon={{type: 'feather', name: 'lock', color: '#28907D'}}
             rightIcon={{
               type: 'feather',
               name: icon,
+              color: '#28907D',
               onPress: () => setTypePassword(),
             }}
             secureTextEntry={showPassword}
           />
           <Button
             title="Sign In"
-            color={'green'}
+            color={'#28907D'}
             buttonStyle={{padding: 15, borderRadius: 10, marginTop: 20}}
             titleStyle={{fontSize: 18}}
           />
         </View>
 
         <View style={styles.bottom}>
-          <Text style={[styles.colorBlack, styles.bottomText]}>
+          <Text style={[styles.colorGray, styles.bottomText]}>
             Forgot your password?
             <Text style={styles.colorPrimary}>Reset now</Text>
           </Text>
-          <Text style={[styles.colorBlack, styles.bottomText]}>
+          <Text style={[styles.colorGray, styles.bottomText]}>
             Don’t have an account?
             <Text style={styles.colorPrimary}>Sign Up</Text>
           </Text>
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   bg: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#161621',
   },
   colorBlack: {
     color: 'black',
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
     color: '#8692A6',
   },
   colorPrimary: {
-    color: 'green',
+    color: '#28907D',
   },
   title: {
     fontSize: 37,
@@ -99,12 +102,10 @@ const styles = StyleSheet.create({
   bottom: {
     marginTop: 20,
     alignItems: 'center',
-    display: 'flex',
   },
   bottomText: {
     fontSize: 16,
-    padding: 5,
+    marginVertical: 5,
   },
 });
-
 export default SignIn;

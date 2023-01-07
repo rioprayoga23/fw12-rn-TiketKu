@@ -9,7 +9,7 @@ const HeaderAuth = props => {
       <Image source={logoTiketKu} style={{width: 150, height: 50}} />
 
       <View style={styles.header}>
-        <Text style={[styles.title, styles.colorBlack]}>{props.title}</Text>
+        <Text style={[styles.title, styles.colorPrimary]}>{props.title}</Text>
         <Text style={[styles.subTitle, styles.colorGray]}>
           {props.subTitle}
         </Text>
@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
   },
   colorGray: {
     color: '#8692A6',
+  },
+  colorPrimary: {
+    color: '#28907D',
   },
   title: {
     fontSize: 37,

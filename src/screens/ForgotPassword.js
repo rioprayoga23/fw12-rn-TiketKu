@@ -13,12 +13,13 @@ const ForgotPassword = () => {
         />
         <View style={styles.form}>
           <Input
+            inputStyle={{color: 'white'}}
             placeholder="Write your email"
-            leftIcon={{type: 'feather', name: 'mail', color: 'green'}}
+            leftIcon={{type: 'feather', name: 'mail', color: '#28907D'}}
           />
           <Button
             title="Sign In"
-            color={'green'}
+            color={'#28907D'}
             buttonStyle={{padding: 15, borderRadius: 10, marginTop: 20}}
             titleStyle={{fontSize: 18}}
           />
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   bg: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#161621',
   },
   colorBlack: {
     color: 'black',
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     color: '#8692A6',
   },
   colorPrimary: {
-    color: 'green',
+    color: '#28907D',
   },
   title: {
     fontSize: 37,
@@ -64,11 +65,9 @@ const styles = StyleSheet.create({
   bottom: {
     marginTop: 20,
     alignItems: 'center',
-    display: 'flex',
   },
   bottomText: {
     fontSize: 16,
-    padding: 5,
   },
 });
 
