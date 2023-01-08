@@ -38,10 +38,30 @@ const Footer = () => {
       <View>
         <Text style={styles.headingFooter}>Follow Us</Text>
         <View style={{flexDirection: 'row'}}>
-          <Icon name="facebook" size={25} style={{marginRight: 30}} />
-          <Icon name="instagram" size={25} style={{marginRight: 30}} />
-          <Icon name="twitter" size={25} style={{marginRight: 30}} />
-          <Icon name="youtube" size={25} style={{marginRight: 30}} />
+          <Icon
+            name="facebook"
+            size={25}
+            color="white"
+            style={{marginRight: 30}}
+          />
+          <Icon
+            name="instagram"
+            size={25}
+            color="white"
+            style={{marginRight: 30}}
+          />
+          <Icon
+            name="twitter"
+            size={25}
+            color="white"
+            style={{marginRight: 30}}
+          />
+          <Icon
+            name="youtube"
+            size={25}
+            color="white"
+            style={{marginRight: 30}}
+          />
         </View>
       </View>
     </View>
@@ -58,17 +78,19 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 15,
     lineHeight: 24,
+    color: 'white',
   },
   headingFooter: {
     paddingVertical: 10,
     marginTop: 20,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#28907D',
   },
   textItemFooter: {
     marginRight: 15,
     fontSize: 15,
+    color: 'white',
   },
 });
 export default Footer;

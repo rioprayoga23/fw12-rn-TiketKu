@@ -3,10 +3,15 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 
 import coverSpiderman from '../img/coverSpiderman.png';
 
-const CardMovie = () => {
+const CardMovieAll = () => {
   return (
     <View style={styles.cardMovie}>
-      <Image source={coverSpiderman} resizeMode="cover" borderRadius={8} />
+      <Image
+        source={coverSpiderman}
+        resizeMode="cover"
+        style={{width: 140, height: 220}}
+        borderRadius={8}
+      />
       <Text style={styles.titleMovie}>Spiderman</Text>
       <Text style={styles.genreMovie}>Action, Adventure, Sci-Fi</Text>
     </View>
@@ -30,4 +35,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CardMovie;
+export default CardMovieAll;

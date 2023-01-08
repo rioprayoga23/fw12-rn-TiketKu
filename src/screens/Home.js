@@ -240,6 +240,7 @@ const styles = StyleSheet.create({
   },
   textSubscriber: {
     fontSize: 20,
+    color: 'white',
   },
   textSubscriberTwo: {
     fontSize: 40,
@@ -252,6 +253,7 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     fontSize: 15,
     lineHeight: 24,
+    color: 'white',
   },
 });
 
