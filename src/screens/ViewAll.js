@@ -14,7 +14,7 @@ const ViewAll = () => {
     <>
       <MainHeader />
       <ScrollView>
-        <>
+        <View style={{backgroundColor: '#161621'}}>
           <View style={styles.heading}>
             <Text style={styles.titleHeading}>List Movie</Text>
           </View>
@@ -178,7 +178,7 @@ const ViewAll = () => {
           </View>
 
           <Footer />
-        </>
+        </View>
       </ScrollView>
     </>
   );
