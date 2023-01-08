@@ -11,8 +11,8 @@ const App = () => {
     // <SignIn />
     // <ForgotPassword />
     // <ResetPassword />
-    // <Home />
-    <ViewAll />
+    <Home />
+    // <ViewAll />
   );
 };
 

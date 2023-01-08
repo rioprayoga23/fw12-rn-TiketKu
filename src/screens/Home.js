@@ -138,6 +138,7 @@ const Home = () => {
                 borderRadius: 8,
                 color: 'white',
                 paddingHorizontal: 10,
+                fontSize: 15,
               }}
               placeholder="Type your email"
             />

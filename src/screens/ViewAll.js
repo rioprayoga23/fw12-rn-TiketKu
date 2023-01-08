@@ -7,7 +7,7 @@ import MainHeader from '../components/MainHeader';
 import Action from '../img/logoAction.png';
 import Adventure from '../img/logoAdventure.png';
 import Romance from '../img/logoRomance.png';
-import Sort from '../img/logoSort.png';
+import SciFi from '../img/logoSort.png';
 
 const ViewAll = () => {
   return (
@@ -27,54 +27,94 @@ const ViewAll = () => {
             <View style={{alignItems: 'center'}}>
               <View
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: '#0A2647',
                   padding: 5,
                   borderRadius: 10,
+                  position: 'relative',
+                  width: 55,
+                  height: 55,
                 }}>
-                <Image source={Action} style={{width: 50, height: 50}} />
+                <Image
+                  source={Action}
+                  style={{
+                    width: 57,
+                    height: 55,
+                    position: 'absolute',
+                    bottom: -4,
+                    right: -15,
+                  }}
+                />
               </View>
-              <Text style={{fontWeight: 'bold', marginTop: 5, color: 'white'}}>
-                Action
-              </Text>
+              <Text style={{marginTop: 5, color: '#28907D'}}>Action</Text>
             </View>
             <View style={{alignItems: 'center'}}>
               <View
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: '#0A2647',
                   padding: 5,
                   borderRadius: 10,
+                  position: 'relative',
+                  width: 55,
+                  height: 55,
                 }}>
-                <Image source={Adventure} style={{width: 50, height: 50}} />
+                <Image
+                  source={Adventure}
+                  style={{
+                    width: 57,
+                    height: 55,
+                    position: 'absolute',
+                    bottom: -4,
+                    right: -15,
+                  }}
+                />
               </View>
-              <Text style={{fontWeight: 'bold', marginTop: 5, color: 'white'}}>
-                Adventure
-              </Text>
+              <Text style={{marginTop: 5, color: '#28907D'}}>Adventure</Text>
             </View>
             <View style={{alignItems: 'center'}}>
               <View
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: '#0A2647',
                   padding: 5,
                   borderRadius: 10,
+                  position: 'relative',
+                  width: 55,
+                  height: 55,
                 }}>
-                <Image source={Romance} />
+                <Image
+                  source={Romance}
+                  style={{
+                    width: 57,
+                    height: 55,
+                    position: 'absolute',
+                    bottom: -5,
+                    right: -15,
+                  }}
+                />
               </View>
-              <Text style={{fontWeight: 'bold', marginTop: 5, color: 'white'}}>
-                Romance
-              </Text>
+              <Text style={{marginTop: 5, color: '#28907D'}}>Romance</Text>
             </View>
             <View style={{alignItems: 'center'}}>
               <View
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: '#0A2647',
                   padding: 5,
                   borderRadius: 10,
+                  position: 'relative',
+                  width: 55,
+                  height: 55,
                 }}>
-                <Image source={Sort} />
+                <Image
+                  source={SciFi}
+                  style={{
+                    width: 53,
+                    height: 53,
+                    position: 'absolute',
+                    bottom: -4,
+                    right: -15,
+                  }}
+                />
               </View>
-              <Text style={{fontWeight: 'bold', marginTop: 5, color: 'white'}}>
-                Order By
-              </Text>
+              <Text style={{marginTop: 5, color: '#28907D'}}>Sci-Fi</Text>
             </View>
           </View>
 
