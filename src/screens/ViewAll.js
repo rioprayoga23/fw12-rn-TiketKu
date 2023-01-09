@@ -1,15 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import BtnMonth from '../components/BtnMonth';
 import CardMovieAll from '../components/CardMovieAll';
 import Footer from '../components/Footer';
 import MainHeader from '../components/MainHeader';
-import Action from '../img/logoAction.png';
-import Adventure from '../img/logoAdventure.png';
-import Romance from '../img/logoRomance.png';
-import SciFi from '../img/logoSort.png';
+import {Actionsheet, Button, Stack, Text, useDisclose} from 'native-base';
+import Icon from 'react-native-vector-icons/dist/Feather';
 
 const ViewAll = () => {
+  const {isOpen, onOpen, onClose} = useDisclose();
   return (
     <>
       <MainHeader />
@@ -17,105 +16,6 @@ const ViewAll = () => {
         <View style={{backgroundColor: '#161621'}}>
           <View style={styles.heading}>
             <Text style={styles.titleHeading}>List Movie</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              paddingHorizontal: 20,
-              justifyContent: 'space-between',
-            }}>
-            <View style={{alignItems: 'center'}}>
-              <View
-                style={{
-                  backgroundColor: '#0A2647',
-                  padding: 5,
-                  borderRadius: 10,
-                  position: 'relative',
-                  width: 55,
-                  height: 55,
-                }}>
-                <Image
-                  source={Action}
-                  style={{
-                    width: 57,
-                    height: 55,
-                    position: 'absolute',
-                    bottom: -4,
-                    right: -15,
-                  }}
-                />
-              </View>
-              <Text style={{marginTop: 5, color: '#28907D'}}>Action</Text>
-            </View>
-            <View style={{alignItems: 'center'}}>
-              <View
-                style={{
-                  backgroundColor: '#0A2647',
-                  padding: 5,
-                  borderRadius: 10,
-                  position: 'relative',
-                  width: 55,
-                  height: 55,
-                }}>
-                <Image
-                  source={Adventure}
-                  style={{
-                    width: 57,
-                    height: 55,
-                    position: 'absolute',
-                    bottom: -4,
-                    right: -15,
-                  }}
-                />
-              </View>
-              <Text style={{marginTop: 5, color: '#28907D'}}>Adventure</Text>
-            </View>
-            <View style={{alignItems: 'center'}}>
-              <View
-                style={{
-                  backgroundColor: '#0A2647',
-                  padding: 5,
-                  borderRadius: 10,
-                  position: 'relative',
-                  width: 55,
-                  height: 55,
-                }}>
-                <Image
-                  source={Romance}
-                  style={{
-                    width: 57,
-                    height: 55,
-                    position: 'absolute',
-                    bottom: -5,
-                    right: -15,
-                  }}
-                />
-              </View>
-              <Text style={{marginTop: 5, color: '#28907D'}}>Romance</Text>
-            </View>
-            <View style={{alignItems: 'center'}}>
-              <View
-                style={{
-                  backgroundColor: '#0A2647',
-                  padding: 5,
-                  borderRadius: 10,
-                  position: 'relative',
-                  width: 55,
-                  height: 55,
-                }}>
-                <Image
-                  source={SciFi}
-                  style={{
-                    width: 53,
-                    height: 53,
-                    position: 'absolute',
-                    bottom: -4,
-                    right: -15,
-                  }}
-                />
-              </View>
-              <Text style={{marginTop: 5, color: '#28907D'}}>Sci-Fi</Text>
-            </View>
           </View>
 
           <View style={styles.containerFilter}>
@@ -133,6 +33,36 @@ const ViewAll = () => {
               <BtnMonth title="November" />
               <BtnMonth title="December" />
             </ScrollView>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              paddingRight: 35,
+              marginTop: 30,
+            }}>
+            <Button
+              onPress={onOpen}
+              width="90px"
+              flexDirection="row"
+              backgroundColor="#28907D"
+              borderRadius={7}>
+              <Stack space={2} direction="row" alignItems="center">
+                <Text fontSize={15} color="white" fontWeight={'500'}>
+                  Sort
+                </Text>
+                <Icon name="filter" size={20} color="white" />
+              </Stack>
+            </Button>
+            <Actionsheet isOpen={isOpen} onClose={onClose}>
+              <Actionsheet.Content>
+                <Actionsheet.Item>Option 1</Actionsheet.Item>
+                <Actionsheet.Item>Option 2</Actionsheet.Item>
+                <Actionsheet.Item>Option 3</Actionsheet.Item>
+                <Actionsheet.Item color="red.500">Delete</Actionsheet.Item>
+              </Actionsheet.Content>
+            </Actionsheet>
           </View>
 
           <View style={styles.main}>
@@ -244,7 +174,7 @@ const styles = StyleSheet.create({
     color: '#28907D',
   },
   containerFilter: {
-    paddingTop: 30,
+    paddingTop: 20,
     paddingLeft: 20,
     flexDirection: 'row',
   },

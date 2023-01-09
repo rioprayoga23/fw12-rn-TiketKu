@@ -9,8 +9,8 @@ const MainHeader = () => {
       <Header
         containerStyle={{
           width: '100%',
-          height: 80,
-          paddingTop: 25,
+          height: 90,
+          paddingTop: 10,
           borderBottomColor: '#28907D',
         }}
         backgroundColor="#28907D">

@@ -5,14 +5,19 @@ import ResetPassword from './src/screens/ResetPassword';
 import SignIn from './src/screens/SignIn';
 import SignUp from './src/screens/SignUp';
 import ViewAll from './src/screens/ViewAll';
+import {NativeBaseProvider, Box} from 'native-base';
+import MovieDetails from './src/screens/MovieDetails';
 const App = () => {
   return (
-    // <SignUp />
-    // <SignIn />
-    // <ForgotPassword />
-    // <ResetPassword />
-    <Home />
-    // <ViewAll />
+    <NativeBaseProvider>
+      {/* <SignUp /> */}
+      {/* <SignIn /> */}
+      {/* <ForgotPassword /> */}
+      {/* <ResetPassword /> */}
+      {/* <Home /> */}
+      {/* <ViewAll /> */}
+      <MovieDetails />
+    </NativeBaseProvider>
   );
 };
 
