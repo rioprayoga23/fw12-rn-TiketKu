@@ -19,7 +19,7 @@ const TicketResult = () => {
       <MainHeader />
       <ScrollView>
         <VStack
-          backgroundColor={'#0A2647'}
+          backgroundColor={'#28907D'}
           marginX={5}
           marginY={10}
           paddingTop={10}
@@ -51,7 +51,7 @@ const TicketResult = () => {
             <Stack space={5} marginTop={'80px'}>
               <HStack paddingX={5}>
                 <Box width={'50%'}>
-                  <Text color={'#AAA'} fontSize={15}>
+                  <Text color={'#0A2647'} fontSize={15}>
                     Movie
                   </Text>
                   <Text color={'white'} fontSize={18} fontWeight={'500'}>
@@ -59,7 +59,7 @@ const TicketResult = () => {
                   </Text>
                 </Box>
                 <Box width={'50%'}>
-                  <Text color={'#AAA'} fontSize={15}>
+                  <Text color={'#0A2647'} fontSize={15}>
                     Category
                   </Text>
                   <Text color={'white'} fontSize={18} fontWeight={'500'}>
@@ -69,7 +69,7 @@ const TicketResult = () => {
               </HStack>
               <HStack paddingX={5}>
                 <Box width={'50%'}>
-                  <Text color={'#AAA'} fontSize={15}>
+                  <Text color={'#0A2647'} fontSize={15}>
                     Date
                   </Text>
                   <Text color={'white'} fontSize={18} fontWeight={'500'}>
@@ -77,7 +77,7 @@ const TicketResult = () => {
                   </Text>
                 </Box>
                 <Box width={'50%'}>
-                  <Text color={'#AAA'} fontSize={15}>
+                  <Text color={'#0A2647'} fontSize={15}>
                     Time
                   </Text>
                   <Text color={'white'} fontSize={18} fontWeight={'500'}>
@@ -87,7 +87,7 @@ const TicketResult = () => {
               </HStack>
               <HStack paddingX={5}>
                 <Box width={'50%'}>
-                  <Text color={'#AAA'} fontSize={15}>
+                  <Text color={'#0A2647'} fontSize={15}>
                     Count
                   </Text>
                   <Text color={'white'} fontSize={18} fontWeight={'500'}>
@@ -95,7 +95,7 @@ const TicketResult = () => {
                   </Text>
                 </Box>
                 <Box width={'50%'}>
-                  <Text color={'#AAA'} fontSize={15}>
+                  <Text color={'#0A2647'} fontSize={15}>
                     Seats
                   </Text>
                   <Text color={'white'} fontSize={18} fontWeight={'500'}>
@@ -114,7 +114,7 @@ const TicketResult = () => {
                 <Text color={'white'} fontSize={20} flex={1}>
                   Total
                 </Text>
-                <Text color={'#28907D'} fontSize={22} fontWeight={'bold'}>
+                <Text color={'#0A2647'} fontSize={22} fontWeight={'bold'}>
                   $30.00
                 </Text>
               </HStack>
