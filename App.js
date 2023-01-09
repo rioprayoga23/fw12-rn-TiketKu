@@ -9,6 +9,7 @@ import {NativeBaseProvider, Box} from 'native-base';
 import MovieDetails from './src/screens/MovieDetails';
 import Order from './src/screens/Order';
 import Payment from './src/screens/Payment';
+import Profile from './src/screens/Profile';
 const App = () => {
   return (
     <NativeBaseProvider>
@@ -20,7 +21,8 @@ const App = () => {
       {/* <ViewAll /> */}
       {/* <MovieDetails /> */}
       {/* <Order /> */}
-      <Payment />
+      {/* <Payment /> */}
+      <Profile />
     </NativeBaseProvider>
   );
 };
