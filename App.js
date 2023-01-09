@@ -7,6 +7,7 @@ import SignUp from './src/screens/SignUp';
 import ViewAll from './src/screens/ViewAll';
 import {NativeBaseProvider, Box} from 'native-base';
 import MovieDetails from './src/screens/MovieDetails';
+import Order from './src/screens/Order';
 const App = () => {
   return (
     <NativeBaseProvider>
@@ -16,7 +17,8 @@ const App = () => {
       {/* <ResetPassword /> */}
       {/* <Home /> */}
       {/* <ViewAll /> */}
-      <MovieDetails />
+      {/* <MovieDetails /> */}
+      <Order />
     </NativeBaseProvider>
   );
 };
