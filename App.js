@@ -10,6 +10,7 @@ import MovieDetails from './src/screens/MovieDetails';
 import Order from './src/screens/Order';
 import Payment from './src/screens/Payment';
 import Profile from './src/screens/Profile';
+import OrderHistory from './src/screens/OrderHistory';
 const App = () => {
   return (
     <NativeBaseProvider>
@@ -22,7 +23,8 @@ const App = () => {
       {/* <MovieDetails /> */}
       {/* <Order /> */}
       {/* <Payment /> */}
-      <Profile />
+      {/* <Profile /> */}
+      <OrderHistory />
     </NativeBaseProvider>
   );
 };
