@@ -15,6 +15,7 @@ import MainHeader from '../components/MainHeader';
 import Icon from 'react-native-vector-icons/dist/Feather';
 import LogoEbu from '../img/ebu.png';
 import Footer from '../components/Footer';
+import BtnFormAction from '../components/BtnFormAction';
 
 const Order = () => {
   return (
@@ -171,9 +172,8 @@ const Order = () => {
               </Text>
             </HStack>
           </VStack>
-          <Button background={'#28907D'} borderRadius={8}>
-            Checkout Now
-          </Button>
+
+          <BtnFormAction title={'Checkout Now'} />
         </VStack>
         <Footer />
       </ScrollView>
