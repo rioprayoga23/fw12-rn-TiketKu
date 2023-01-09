@@ -3,13 +3,13 @@ import {
   VStack,
   Image,
   Box,
-  Circle,
   View,
   HStack,
   Text,
   ScrollView,
 } from 'native-base';
 import React from 'react';
+import Footer from '../components/Footer';
 import MainHeader from '../components/MainHeader';
 import QrCode from '../img/qr.png';
 
@@ -30,7 +30,7 @@ const TicketResult = () => {
             </Stack>
             <Stack direction={'row'} alignItems={'center'}>
               <Box
-                borderBottomWidth={3}
+                borderBottomWidth={2}
                 flex={1}
                 borderStyle={'dashed'}
                 borderBottomColor={'#161621'}
@@ -121,6 +121,7 @@ const TicketResult = () => {
             </Stack>
           </Stack>
         </VStack>
+        <Footer />
       </ScrollView>
     </Stack>
   );
