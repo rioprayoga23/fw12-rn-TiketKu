@@ -17,7 +17,7 @@ const TicketResult = () => {
   return (
     <Stack direction={'column'} backgroundColor={'#161621'} flex={1}>
       <MainHeader />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <VStack
           backgroundColor={'#28907D'}
           marginX={5}

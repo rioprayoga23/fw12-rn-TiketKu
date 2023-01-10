@@ -9,9 +9,10 @@ import {NativeBaseProvider, Box} from 'native-base';
 import MovieDetails from './src/screens/MovieDetails';
 import Order from './src/screens/Order';
 import Payment from './src/screens/Payment';
-import Profile from './src/screens/Profile';
 import OrderHistory from './src/screens/OrderHistory';
 import TicketResult from './src/screens/TicketResult';
+import Profile from './src/screens/Profile';
+import DetailsAccount from './src/screens/DetailsAccount';
 const App = () => {
   return (
     <NativeBaseProvider>
@@ -24,9 +25,10 @@ const App = () => {
       {/* <MovieDetails /> */}
       {/* <Order /> */}
       {/* <Payment /> */}
-      {/* <Profile /> */}
+      {/* <DetailsAccount /> */}
       {/* <OrderHistory /> */}
-      <TicketResult />
+      {/* <TicketResult /> */}
+      <Profile />
     </NativeBaseProvider>
   );
 };

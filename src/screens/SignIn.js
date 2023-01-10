@@ -18,7 +18,7 @@ const SignIn = () => {
 
   return (
     <View style={[styles.bg, styles.wrapper]}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderAuth
           title={'Sign In'}
           subTitle={

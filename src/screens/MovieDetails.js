@@ -46,7 +46,7 @@ const MovieDetails = () => {
   return (
     <Stack direction={'column'} backgroundColor={'#161621'} flex={1}>
       <MainHeader />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <HStack space={5} paddingY={10} width="full" justifyContent={'center'}>
           <Image
             source={imgSipderman}

@@ -51,7 +51,7 @@ const Home = () => {
     <>
       <MainHeader />
       <View style={styles.main}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.containerCarousel}>
             <View style={styles.containerHeading}>
               <Text style={styles.textHeading}>
@@ -84,7 +84,9 @@ const Home = () => {
               <Text style={styles.titleShowAll}>See All</Text>
             </View>
             <View style={styles.containerMainNow}>
-              <ScrollView horizontal={true}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
                 <CardMovie />
                 <CardMovie />
                 <CardMovie />
@@ -99,7 +101,9 @@ const Home = () => {
               <Text style={styles.titleShowAll}>See All</Text>
             </View>
             <View style={styles.containerFilter}>
-              <ScrollView horizontal={true}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
                 <BtnMonth title="January" active={true} />
                 <BtnMonth title="Februari" />
                 <BtnMonth title="March" />
@@ -115,7 +119,9 @@ const Home = () => {
               </ScrollView>
             </View>
             <View style={styles.containerMainUp}>
-              <ScrollView horizontal={true}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
                 <CardMovie />
                 <CardMovie />
                 <CardMovie />

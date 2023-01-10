@@ -29,7 +29,7 @@ const Payment = () => {
           $30.00
         </Text>
       </HStack>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <VStack padding={5} space={4}>
           <Text color={'white'} fontSize={18}>
             Payment Method

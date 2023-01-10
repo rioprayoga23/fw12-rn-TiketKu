@@ -32,7 +32,7 @@ const ResetPassword = () => {
 
   return (
     <View style={[styles.bg, styles.wrapper]}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderAuth title={'Set Password'} subTitle={'set your new password'} />
         <View style={styles.form}>
           <Input

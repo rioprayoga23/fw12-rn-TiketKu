@@ -12,14 +12,16 @@ const ViewAll = () => {
   return (
     <>
       <MainHeader />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{backgroundColor: '#161621'}}>
           <View style={styles.heading}>
             <Text style={styles.titleHeading}>List Movie</Text>
           </View>
 
           <View style={styles.containerFilter}>
-            <ScrollView horizontal={true}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
               <BtnMonth title="January" active={true} />
               <BtnMonth title="Februari" />
               <BtnMonth title="March" />

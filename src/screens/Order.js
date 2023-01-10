@@ -21,7 +21,7 @@ const Order = () => {
   return (
     <Stack direction={'column'} backgroundColor={'#161621'} flex={1}>
       <MainHeader />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <VStack padding={5} space={4}>
           <Text color={'white'} fontSize={18}>
             Choose Your Seat

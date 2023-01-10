@@ -19,7 +19,7 @@ const SignUp = () => {
 
   return (
     <View style={[styles.bg, styles.wrapper]}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderAuth
           title={'Sign Up'}
           subTitle={'Fill your additional details'}
