@@ -2,8 +2,12 @@ import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Avatar, Header, SearchBar} from '@rneui/themed';
 import {StyleSheet, View} from 'react-native';
+import {Pressable} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
 
 const MainHeader = () => {
+  const navigation = useNavigation();
+  const login = true;
   return (
     <SafeAreaView>
       <Header
@@ -27,13 +31,22 @@ const MainHeader = () => {
             placeholder="Search movie here"
             platform="android"
           />
-          <View>
-            <Avatar
-              size={43}
-              rounded
-              source={{uri: 'https://randomuser.me/api/portraits/men/36.jpg'}}
-            />
-          </View>
+          <Pressable
+            onPress={() => {
+              if (!login) {
+                navigation.navigate('SignIn');
+              } else {
+                navigation.navigate('Profile');
+              }
+            }}>
+            <View>
+              <Avatar
+                size={43}
+                rounded
+                source={{uri: 'https://randomuser.me/api/portraits/men/36.jpg'}}
+              />
+            </View>
+          </Pressable>
         </View>
       </Header>
     </SafeAreaView>

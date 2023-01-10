@@ -3,8 +3,10 @@ import {View, StyleSheet} from 'react-native';
 import {Button, Input} from '@rneui/themed';
 import {ScrollView} from 'react-native';
 import HeaderAuth from '../components/HeaderAuth';
+import {useNavigation} from '@react-navigation/native';
 
 const ResetPassword = () => {
+  const navigation = useNavigation();
   const [showNewPassword, setShowNewPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
   const [iconOne, setIconOne] = useState('eye-off');
@@ -60,7 +62,8 @@ const ResetPassword = () => {
             secureTextEntry={showConfirmPassword}
           />
           <Button
-            title="Sign In"
+            onPress={() => navigation.navigate('SignIn')}
+            title="Submit"
             color={'#28907D'}
             buttonStyle={{padding: 15, borderRadius: 10, marginTop: 20}}
             titleStyle={{fontSize: 18}}

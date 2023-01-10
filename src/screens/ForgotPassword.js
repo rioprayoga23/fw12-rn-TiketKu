@@ -3,7 +3,9 @@ import {View, StyleSheet} from 'react-native';
 import {Button, Input} from '@rneui/themed';
 import {ScrollView} from 'react-native';
 import HeaderAuth from '../components/HeaderAuth';
+import {useNavigation} from '@react-navigation/native';
 const ForgotPassword = () => {
+  const navigation = useNavigation();
   return (
     <View style={[styles.bg, styles.wrapper]}>
       <ScrollView>
@@ -18,6 +20,7 @@ const ForgotPassword = () => {
             leftIcon={{type: 'feather', name: 'mail', color: '#28907D'}}
           />
           <Button
+            onPress={() => navigation.navigate('ResetPassword')}
             title="Sign In"
             color={'#28907D'}
             buttonStyle={{padding: 15, borderRadius: 10, marginTop: 20}}

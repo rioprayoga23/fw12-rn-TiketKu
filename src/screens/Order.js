@@ -172,8 +172,7 @@ const Order = () => {
               </Text>
             </HStack>
           </VStack>
-
-          <BtnFormAction title={'Checkout Now'} />
+          <BtnFormAction title={'Checkout Now'} navigationPath="Payment" />
         </VStack>
         <Footer />
       </ScrollView>

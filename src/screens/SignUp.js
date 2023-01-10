@@ -2,9 +2,13 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Button, Input} from '@rneui/themed';
 import {ScrollView} from 'react-native';
+import {HStack, Pressable} from 'native-base';
 import HeaderAuth from '../components/HeaderAuth';
 import {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 const SignUp = () => {
+  const navigation = useNavigation();
+
   const [showPassword, setShowPassword] = useState(true);
   const [icon, setIcon] = useState('eye-off');
   const setTypePassword = () => {
@@ -73,10 +77,17 @@ const SignUp = () => {
         </View>
 
         <View style={styles.bottom}>
-          <Text style={[styles.colorGray, styles.bottomText]}>
-            Already have account ?
-            <Text style={styles.colorPrimary}>Sign In</Text>
-          </Text>
+          <HStack alignItems={'center'}>
+            <Text style={[styles.colorGray, styles.bottomText]}>
+              Already have account ?
+            </Text>
+            <Pressable onPress={() => navigation.navigate('SignIn')}>
+              <Text style={[styles.colorPrimary, styles.bottomText]}>
+                {' '}
+                Sign In
+              </Text>
+            </Pressable>
+          </HStack>
         </View>
       </ScrollView>
     </View>

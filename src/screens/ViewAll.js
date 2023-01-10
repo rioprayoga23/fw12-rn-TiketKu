@@ -1,13 +1,15 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
 import BtnMonth from '../components/BtnMonth';
 import CardMovieAll from '../components/CardMovieAll';
 import Footer from '../components/Footer';
 import MainHeader from '../components/MainHeader';
 import {Actionsheet, Button, Stack, Text, useDisclose} from 'native-base';
 import Icon from 'react-native-vector-icons/dist/Feather';
+import {useNavigation} from '@react-navigation/native';
 
 const ViewAll = () => {
+  const navigation = useNavigation();
   const {isOpen, onOpen, onClose} = useDisclose();
   return (
     <>
@@ -75,7 +77,9 @@ const ViewAll = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <CardMovieAll />
+              <Pressable onPress={() => navigation.navigate('MovieDetails')}>
+                <CardMovieAll />
+              </Pressable>
             </View>
             <View
               style={{

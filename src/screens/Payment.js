@@ -16,8 +16,11 @@ import Icon from 'react-native-vector-icons/dist/Feather';
 import LogoGPay from '../img/gpay.png';
 import Footer from '../components/Footer';
 import BtnFormAction from '../components/BtnFormAction';
+import {useNavigation} from '@react-navigation/native';
 
 const Payment = () => {
+  const navigation = useNavigation();
+
   return (
     <Stack direction={'column'} backgroundColor={'#161621'} flex={1}>
       <MainHeader />
@@ -197,7 +200,10 @@ const Payment = () => {
               </Stack>
             </VStack>
             <Box mt={5}>
-              <BtnFormAction title={'Pay your order'} />
+              <BtnFormAction
+                title={'Pay your order'}
+                navigationPath={'TicketResult'}
+              />
             </Box>
           </FormControl>
         </VStack>

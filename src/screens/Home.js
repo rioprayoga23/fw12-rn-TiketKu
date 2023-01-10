@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   ImageBackground,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,6 +16,7 @@ import BtnMonth from '../components/BtnMonth';
 import {Button, Input} from '@rneui/themed';
 import CardMovie from '../components/CardMovie';
 import Footer from '../components/Footer';
+import {useNavigation} from '@react-navigation/native';
 
 const dataCarousel = [
   {
@@ -45,6 +47,8 @@ const Item = ({img}) => {
 };
 
 const Home = () => {
+  const navigation = useNavigation();
+
   const renderItem = ({item}) => <Item img={item.img} />;
 
   return (
@@ -81,7 +85,9 @@ const Home = () => {
           <View>
             <View style={styles.containerHeadingNow}>
               <Text style={styles.titleInMain}>Now Showing</Text>
-              <Text style={styles.titleShowAll}>See All</Text>
+              <Pressable onPress={() => navigation.navigate('ViewAll')}>
+                <Text style={styles.titleShowAll}>See All</Text>
+              </Pressable>
             </View>
             <View style={styles.containerMainNow}>
               <ScrollView
@@ -98,7 +104,9 @@ const Home = () => {
 
             <View style={styles.containerHeadingUp}>
               <Text style={styles.titleInMain}>Upcoming Movies</Text>
-              <Text style={styles.titleShowAll}>See All</Text>
+              <Pressable onPress={() => navigation.navigate('ViewAll')}>
+                <Text style={styles.titleShowAll}>See All</Text>
+              </Pressable>
             </View>
             <View style={styles.containerFilter}>
               <ScrollView

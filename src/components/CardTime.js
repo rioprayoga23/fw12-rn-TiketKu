@@ -1,8 +1,11 @@
 import React from 'react';
 import {Box, Button, HStack, Image, Text, VStack} from 'native-base';
 import logoEbu from '../img/ebu.png';
+import {useNavigation} from '@react-navigation/native';
 
 const CardTime = () => {
+  const navigation = useNavigation();
+
   return (
     <VStack>
       <Box backgroundColor={'#0A2647'} borderRadius={8} padding={5}>
@@ -52,7 +55,10 @@ const CardTime = () => {
             </Text>
           </HStack>
         </HStack>
-        <Button backgroundColor={'#28907D'} marginTop={10}>
+        <Button
+          onPress={() => navigation.navigate('Order')}
+          backgroundColor={'#28907D'}
+          marginTop={10}>
           Book Now
         </Button>
       </Box>
