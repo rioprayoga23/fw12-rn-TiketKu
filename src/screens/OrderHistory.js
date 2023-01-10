@@ -1,13 +1,11 @@
 import {Box, VStack, Image, Text, Stack, ScrollView} from 'native-base';
 import React from 'react';
-import MainHeader from '../components/MainHeader';
 import LogoEbu from '../img/ebu.png';
 
 const OrderHistory = () => {
   return (
     <Stack direction={'column'} backgroundColor={'#161621'} flex={1}>
-      <MainHeader />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <VStack space={4} padding={5}>
           <Box backgroundColor={'#0A2647'} padding={5} borderRadius={8}>
             <Image source={LogoEbu} alt="ebu" />
