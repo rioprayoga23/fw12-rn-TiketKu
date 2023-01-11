@@ -1,22 +1,34 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import {Pressable, HStack} from 'native-base';
-import {Button, Input} from '@rneui/themed';
+import {
+  Pressable,
+  HStack,
+  Stack,
+  FormControl,
+  Input,
+  Box,
+  VStack,
+  Button,
+} from 'native-base';
 import {ScrollView} from 'react-native';
 import HeaderAuth from '../components/HeaderAuth';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/dist/Feather';
+
+import * as Yup from 'yup';
+import {Formik} from 'formik';
+
+const SignInSchema = Yup.object({
+  email: Yup.string().email('Invalid email address').required('Required'),
+  password: Yup.string().required('Required'),
+});
 const SignIn = () => {
+  const [showOne, setShowOne] = useState(false);
+
   const navigation = useNavigation();
-  const [showPassword, setShowPassword] = useState(true);
-  const [icon, setIcon] = useState('eye-off');
-  const setTypePassword = () => {
-    if (showPassword === true) {
-      setShowPassword(false);
-      setIcon('eye');
-    } else {
-      setShowPassword(true);
-      setIcon('eye-off');
-    }
+
+  const doLogin = value => {
+    console.log(value);
   };
 
   return (
@@ -28,31 +40,97 @@ const SignIn = () => {
             'Sign in with your data that you entered during your registration'
           }
         />
-        <View style={styles.form}>
-          <Input
-            inputStyle={{color: 'white'}}
-            placeholder="Write your email"
-            leftIcon={{type: 'feather', name: 'mail', color: '#28907D'}}
-          />
-          <Input
-            inputStyle={{color: 'white'}}
-            placeholder="Write your password"
-            leftIcon={{type: 'feather', name: 'lock', color: '#28907D'}}
-            rightIcon={{
-              type: 'feather',
-              name: icon,
-              color: '#28907D',
-              onPress: () => setTypePassword(),
-            }}
-            secureTextEntry={showPassword}
-          />
-          <Button
-            title="Sign In"
-            color={'#28907D'}
-            buttonStyle={{padding: 15, borderRadius: 10, marginTop: 20}}
-            titleStyle={{fontSize: 18}}
-          />
-        </View>
+        <Formik
+          initialValues={{
+            email: '',
+            password: '',
+          }}
+          validationSchema={SignInSchema}
+          onSubmit={doLogin}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            dirty,
+            touched,
+          }) => (
+            <VStack space={3} mt={5}>
+              <FormControl isInvalid={errors.email && touched.email}>
+                <Stack>
+                  <FormControl.Label fontSize={15}>Email</FormControl.Label>
+                  <Input
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                    variant="outline"
+                    p={2}
+                    placeholder="Write your email"
+                    placeholderTextColor={'white'}
+                    color={'white'}
+                    fontSize={15}
+                  />
+                  {errors.email && (
+                    <FormControl.ErrorMessage
+                      leftIcon={
+                        <Icon name="alert-circle" size={18} color="red" />
+                      }>
+                      {errors.email}
+                    </FormControl.ErrorMessage>
+                  )}
+                </Stack>
+              </FormControl>
+              <FormControl isInvalid={errors.password && touched.password}>
+                <Stack mb={5}>
+                  <FormControl.Label fontSize={15}>
+                    New Password
+                  </FormControl.Label>
+                  <Input
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                    w={{
+                      base: '100%',
+                      md: '25%',
+                    }}
+                    type={showOne ? 'text' : 'password'}
+                    InputRightElement={
+                      <Pressable onPress={() => setShowOne(!showOne)}>
+                        <Box mr={3}>
+                          <Icon
+                            name={showOne ? 'eye' : 'eye-off'}
+                            size={25}
+                            color="muted.400"
+                          />
+                        </Box>
+                      </Pressable>
+                    }
+                    color={'white'}
+                    fontSize={15}
+                    placeholderTextColor={'white'}
+                    placeholder="Write your password"
+                  />
+                  {errors.password && (
+                    <FormControl.ErrorMessage
+                      leftIcon={
+                        <Icon name="alert-circle" size={18} color="red" />
+                      }>
+                      {errors.password}
+                    </FormControl.ErrorMessage>
+                  )}
+                </Stack>
+              </FormControl>
+              <Button
+                onPress={handleSubmit}
+                isDisabled={!dirty}
+                background={'#28907D'}
+                borderRadius={8}>
+                Sign In
+              </Button>
+            </VStack>
+          )}
+        </Formik>
 
         <View style={styles.bottom}>
           <HStack alignItems={'center'}>
