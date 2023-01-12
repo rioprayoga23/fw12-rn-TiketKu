@@ -44,31 +44,17 @@ const TabBottom = () => {
           ),
         }}
       />
-      {/* {!login ? (
-        <Tab.Screen
-          name="SignIn"
-          component={SignIn}
-          options={{
-            headerShown: false,
-            tabBarLabel: 'Profile',
-            tabBarIcon: ({color, size}) => (
-              <Icon name="user" color={color} size={size} />
-            ),
-          }}
-        />
-      ) : (
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            headerShown: false,
-            tabBarLabel: 'Profile',
-            tabBarIcon: ({color, size}) => (
-              <Icon name="user" color={color} size={size} />
-            ),
-          }}
-        />
-      )} */}
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="user" color={color} size={size} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };

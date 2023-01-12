@@ -16,87 +16,85 @@ import DetailsAccount from './DetailsAccount';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TabBottom from '../components/TabBottom';
+import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
 const Main = () => {
+  const token = useSelector(state => state.auth.token);
+
   return (
     <NavigationContainer>
       <NativeBaseProvider>
         <Stack.Navigator>
-          <Stack.Screen
-            name="SignIn"
-            component={SignIn}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="SignUp"
-            component={SignUp}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="ForgotPassword"
-            component={ForgotPassword}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="ResetPassword"
-            component={ResetPassword}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="TabBottom"
-            component={TabBottom}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Profile"
-            component={Profile}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="ViewAll"
-            component={ViewAll}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="MovieDetails"
-            component={MovieDetails}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Order"
-            component={Order}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Payment"
-            component={Payment}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="TicketResult"
-            component={TicketResult}
-            options={{headerShown: false}}
-          />
-
-          {/* <SignUp /> */}
-          {/* <SignIn /> */}
-          {/* <ForgotPassword /> */}
-          {/* <ResetPassword /> */}
-          {/* <ViewAll /> */}
-          {/* <MovieDetails /> */}
-          {/* <Order /> */}
-          {/* <Payment /> */}
-          {/* <DetailsAccount /> */}
-          {/* <OrderHistory /> */}
-          {/* <TicketResult /> */}
-          {/* <Profile /> */}
+          {!token && (
+            <>
+              <Stack.Screen
+                name="SignIn"
+                component={SignIn}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="SignUp"
+                component={SignUp}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ForgotPassword"
+                component={ForgotPassword}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ResetPassword"
+                component={ResetPassword}
+                options={{headerShown: false}}
+              />
+            </>
+          )}
+          {token && (
+            <>
+              <Stack.Screen
+                name="TabBottom"
+                component={TabBottom}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Profile"
+                component={Profile}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ViewAll"
+                component={ViewAll}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="MovieDetails"
+                component={MovieDetails}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Order"
+                component={Order}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Payment"
+                component={Payment}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="TicketResult"
+                component={TicketResult}
+                options={{headerShown: false}}
+              />
+            </>
+          )}
         </Stack.Navigator>
       </NativeBaseProvider>
     </NavigationContainer>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {
   Pressable,
   HStack,
@@ -9,6 +9,8 @@ import {
   Box,
   VStack,
   Button,
+  Alert,
+  Text,
 } from 'native-base';
 import {ScrollView} from 'react-native';
 import HeaderAuth from '../components/HeaderAuth';
@@ -17,18 +19,23 @@ import Icon from 'react-native-vector-icons/dist/Feather';
 
 import * as Yup from 'yup';
 import {Formik} from 'formik';
+import {useDispatch, useSelector} from 'react-redux';
+import {loginAction} from '../redux/actions/auth';
 
 const SignInSchema = Yup.object({
   email: Yup.string().email('Invalid email address').required('Required'),
   password: Yup.string().required('Required'),
 });
 const SignIn = () => {
+  const dispatch = useDispatch();
   const [showOne, setShowOne] = useState(false);
+  const message = useSelector(state => state.auth.message);
+  const isLoading = useSelector(state => state.auth.isLoading);
 
   const navigation = useNavigation();
 
   const doLogin = value => {
-    console.log(value);
+    dispatch(loginAction({value}));
   };
 
   return (
@@ -40,6 +47,13 @@ const SignIn = () => {
             'Sign in with your data that you entered during your registration'
           }
         />
+        {message && (
+          <Box my={5}>
+            <Alert status={'error'}>
+              <Text fontWeight={'bold'}>{message}</Text>
+            </Alert>
+          </Box>
+        )}
         <Formik
           initialValues={{
             email: '',
@@ -122,8 +136,9 @@ const SignIn = () => {
                 </Stack>
               </FormControl>
               <Button
+                isLoading={!isLoading}
                 onPress={handleSubmit}
-                isDisabled={!dirty}
+                isDisabled={!dirty || !isLoading}
                 background={'#28907D'}
                 borderRadius={8}>
                 Sign In

@@ -3,20 +3,22 @@ import {
   Avatar,
   Box,
   FormControl,
-  HStack,
-  Image,
   Input,
   Pressable,
   ScrollView,
   Stack,
   Text,
   VStack,
+  Button,
 } from 'native-base';
 import Icon from 'react-native-vector-icons/dist/Feather';
 import Footer from '../components/Footer';
 import BtnFormAction from '../components/BtnFormAction';
+import {useDispatch} from 'react-redux';
+import {logoutAction} from '../redux/reducers/auth';
 
 const DetailsAccount = () => {
+  const dispatch = useDispatch();
   const [showOne, setShowOne] = React.useState(false);
   const [showTwo, setShowTwo] = React.useState(false);
   return (
@@ -41,7 +43,12 @@ const DetailsAccount = () => {
               borderBottomColor={'white'}
               marginY={7}
             />
-            <BtnFormAction title={'Logout'} />
+            <Button
+              onPress={() => dispatch(logoutAction())}
+              background={'#28907D'}
+              borderRadius={8}>
+              Logout
+            </Button>
           </VStack>
 
           <VStack my={5}>

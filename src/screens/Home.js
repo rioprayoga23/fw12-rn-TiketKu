@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   Pressable,
@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import {Image} from 'native-base';
 import Carousel from 'react-native-snap-carousel';
 import MainHeader from '../components/MainHeader';
 import imgSipderman from '../img/spiderman.jpg';
@@ -17,6 +18,9 @@ import {Button, Input} from '@rneui/themed';
 import CardMovie from '../components/CardMovie';
 import Footer from '../components/Footer';
 import {useNavigation} from '@react-navigation/native';
+import http from '../helpers/http';
+import shortid from 'shortid';
+import SkeletonLoading from '../components/SkeletonLoading';
 
 const dataCarousel = [
   {
@@ -47,10 +51,42 @@ const Item = ({img}) => {
 };
 
 const Home = () => {
+  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataNowShowing, setDataNowShowing] = useState([]);
+  const [dataUpcoming, setDataUpcoming] = useState([]);
   const navigation = useNavigation();
 
   const renderItem = ({item}) => <Item img={item.img} />;
 
+  const getNowShowing = async () => {
+    try {
+      setIsLoading(false);
+      const {data} = await http().get('/movies/now');
+      setIsLoading(true);
+      setDataNowShowing(data.results);
+    } catch (error) {
+      setMessage(error.response.data.message);
+      setIsLoading(true);
+    }
+  };
+
+  const getUpcoming = async () => {
+    try {
+      setIsLoading(false);
+      const {data} = await http().get('/movies/upcoming');
+      setIsLoading(true);
+      setDataUpcoming(data.results);
+    } catch (error) {
+      setMessage(error.response.data.message);
+      setIsLoading(true);
+    }
+  };
+
+  useEffect(() => {
+    getNowShowing();
+    getUpcoming();
+  }, []);
   return (
     <>
       <MainHeader />
@@ -93,12 +129,26 @@ const Home = () => {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-                <CardMovie />
-                <CardMovie />
-                <CardMovie />
-                <CardMovie />
-                <CardMovie />
-                <CardMovie />
+                {!isLoading ? (
+                  <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}>
+                    <SkeletonLoading />
+                    <SkeletonLoading />
+                    <SkeletonLoading />
+                    <SkeletonLoading />
+                  </ScrollView>
+                ) : (
+                  <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}>
+                    {dataNowShowing?.map(movie => {
+                      return (
+                        <CardMovie data={movie} dataKey={shortid.generate()} />
+                      );
+                    })}
+                  </ScrollView>
+                )}
               </ScrollView>
             </View>
 
@@ -127,16 +177,25 @@ const Home = () => {
               </ScrollView>
             </View>
             <View style={styles.containerMainUp}>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}>
-                <CardMovie />
-                <CardMovie />
-                <CardMovie />
-                <CardMovie />
-                <CardMovie />
-                <CardMovie />
-              </ScrollView>
+              {!isLoading ? (
+                <ScrollView
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}>
+                  <SkeletonLoading />
+                  <SkeletonLoading />
+                  <SkeletonLoading />
+                </ScrollView>
+              ) : (
+                <ScrollView
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}>
+                  {dataUpcoming?.map(movie => {
+                    return (
+                      <CardMovie data={movie} dataKey={shortid.generate()} />
+                    );
+                  })}
+                </ScrollView>
+              )}
             </View>
           </View>
 
@@ -269,6 +328,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 24,
     color: 'white',
+  },
+  titleMovie: {
+    color: 'white',
+    fontSize: 19,
+    fontWeight: 'bold',
+    paddingVertical: 5,
+  },
+  genreMovie: {
+    color: 'white',
+    fontSize: 14,
+  },
+  cardMovie: {
+    width: 122,
+    marginRight: 15,
   },
 });
 

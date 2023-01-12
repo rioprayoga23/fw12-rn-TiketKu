@@ -6,7 +6,7 @@ import logoTiketKu from '../img/Tickitz.png';
 const HeaderAuth = props => {
   return (
     <>
-      <Image source={logoTiketKu} style={{width: 150, height: 50}} />
+      <Image source={logoTiketKu} style={{width: 190, height: 80}} />
       <View style={styles.header}>
         <Text style={[styles.title, styles.colorPrimary]}>{props.title}</Text>
         <Text style={[styles.subTitle, styles.colorGray]}>
