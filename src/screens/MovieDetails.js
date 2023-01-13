@@ -1,13 +1,12 @@
-import React, {useState} from 'react';
-import MainHeader from '../components/MainHeader';
+import React, {useEffect, useState} from 'react';
 
 import {
   Actionsheet,
   Box,
   Button,
   HStack,
-  Image,
   ScrollView,
+  Skeleton,
   Stack,
   Text,
   useDisclose,
@@ -15,15 +14,20 @@ import {
 } from 'native-base';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
 
-import imgSipderman from '../img/coverSpiderman.png';
 import Icon from 'react-native-vector-icons/dist/Feather';
 import CardTime from '../components/CardTime';
 import Footer from '../components/Footer';
+import http from '../helpers/http';
+import {Image} from 'react-native';
+import SkeletonLoading from '../components/SkeletonLoading';
 
-const MovieDetails = () => {
-  const {isOpen, onOpen, onClose} = useDisclose();
-
+const MovieDetails = ({route}) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataMovies, setDataMovies] = useState([]);
   const [date, setDate] = useState(new Date(1598051730000));
+
+  const {isOpen, onOpen, onClose} = useDisclose();
+  const movieId = route?.params?.id;
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -43,65 +47,134 @@ const MovieDetails = () => {
     showMode('date');
   };
 
+  useEffect(() => {
+    const getAllMovie = async () => {
+      try {
+        setIsLoading(false);
+        const {data} = await http().get(`/movies/${movieId}`);
+        setIsLoading(true);
+        setDataMovies(data.results);
+      } catch (error) {
+        setIsLoading(true);
+      }
+    };
+    getAllMovie();
+  }, [movieId]);
+
   return (
     <Stack direction={'column'} backgroundColor={'#161621'} flex={1}>
-      <MainHeader />
       <ScrollView showsVerticalScrollIndicator={false}>
         <HStack space={5} paddingY={10} width="full" justifyContent={'center'}>
-          <Image
-            source={imgSipderman}
-            alt="spiderman"
-            width={'152px'}
-            height={'220px'}
-            resizeMode="cover"
-            borderRadius={8}
-          />
+          {!isLoading ? (
+            <Skeleton w="152" h="220" borderRadius={8} />
+          ) : (
+            <Image
+              source={{
+                uri: `https://fw12-backend-orcin.vercel.app/uploads/${dataMovies?.picture}`,
+              }}
+              style={{
+                width: 152,
+                height: 220,
+                resizeMode: 'contain',
+                borderRadius: 8,
+              }}
+            />
+          )}
         </HStack>
         <VStack space={2} width={'full'} paddingX={5}>
-          <Text
-            color={'white'}
-            fontSize={22}
-            fontWeight={'500'}
-            textAlign={'center'}>
-            Spider-Man: Homecoming
-          </Text>
-          <Text color={'white'} textAlign={'center'} fontSize={16}>
-            Adventure, Action, Sci-Fi
-          </Text>
-          <HStack marginTop={5} marginBottom={2} space={5}>
+          {!isLoading ? (
+            <Stack alignItems={'center'}>
+              <Skeleton.Text lines={1} w="140px" />
+            </Stack>
+          ) : (
+            <Text
+              color={'white'}
+              fontSize={22}
+              fontWeight={'500'}
+              textAlign={'center'}>
+              {dataMovies?.title}
+            </Text>
+          )}
+
+          {!isLoading ? (
+            <Stack alignItems={'center'}>
+              <Skeleton.Text lines={1} w="140px" />
+            </Stack>
+          ) : (
+            <Text color={'white'} textAlign={'center'} fontSize={16}>
+              {dataMovies?.genre}
+            </Text>
+          )}
+          <HStack marginTop={5} marginBottom={2} space={5} paddingRight={5}>
             <Box width={'40%'}>
               <Text color={'#AAA'} fontSize={15}>
-                Release date
+                Release Date
               </Text>
-              <Text color={'white'} fontSize={18}>
-                June 28, 2017
-              </Text>
+              {!isLoading ? (
+                <Stack>
+                  <Skeleton.Text lines={2} w="100px" />
+                </Stack>
+              ) : (
+                <Text color={'white'} fontSize={18}>
+                  {new Date(dataMovies?.releaseDate)
+                    .toLocaleDateString('default', {month: 'long'})
+                    .concat(
+                      ' ',
+                      new Date(dataMovies?.releaseDate).getDate().toString(),
+                      ',',
+                    )
+                    .concat(
+                      ' ',
+                      new Date(dataMovies?.releaseDate)
+                        .getFullYear()
+                        .toString(),
+                    )}
+                </Text>
+              )}
             </Box>
             <Box width={'60%'}>
               <Text color={'#AAA'} fontSize={15}>
                 Directed by
               </Text>
-              <Text color={'white'} fontSize={18}>
-                Jon Watss
-              </Text>
+              {!isLoading ? (
+                <Stack>
+                  <Skeleton.Text lines={2} w="100px" />
+                </Stack>
+              ) : (
+                <Text color={'white'} fontSize={18}>
+                  {dataMovies?.director}
+                </Text>
+              )}
             </Box>
           </HStack>
-          <HStack marginTop={5} marginBottom={2} space={5}>
+          <HStack marginTop={5} marginBottom={2} space={5} paddingRight={5}>
             <Box width={'40%'}>
               <Text color={'#AAA'} fontSize={15}>
                 Duration
               </Text>
-              <Text color={'white'} fontSize={18}>
-                2 hrs 13 min
-              </Text>
+              {!isLoading ? (
+                <Stack>
+                  <Skeleton.Text lines={2} w="100px" />
+                </Stack>
+              ) : (
+                <Text color={'white'} fontSize={18}>
+                  {dataMovies?.hours} hours {dataMovies?.minutes} minutes
+                </Text>
+              )}
             </Box>
             <Box width={'60%'}>
               <Text color={'#AAA'} fontSize={15}>
                 Casts
               </Text>
-              <Text color={'white'} fontSize={18}>
-                Tom Holland, Robert Downey Jr., etc.
-              </Text>
+              {!isLoading ? (
+                <Stack>
+                  <Skeleton.Text lines={2} w="100px" />
+                </Stack>
+              ) : (
+                <Text color={'white'} fontSize={18}>
+                  {dataMovies?.casts}
+                </Text>
+              )}
             </Box>
           </HStack>
           <Box
@@ -114,15 +187,15 @@ const MovieDetails = () => {
             <Text color={'white'} fontSize={'18'}>
               Synopsis
             </Text>
-            <Text color={'#AAA'} fontSize={15}>
-              Thrilled by his experience with the Avengers, Peter returns home,
-              where he lives with his Aunt May, under the watchful eye of his
-              new mentor Tony Stark, Peter tries to fall back into his normal
-              daily routine - distracted by thoughts of proving himself to be
-              more than just your friendly neighborhood Spider-Man - but when
-              the Vulture emerges as a new villain, everything that Peter holds
-              most important will be threatened.
-            </Text>
+            {!isLoading ? (
+              <Stack>
+                <Skeleton.Text lines={6} />
+              </Stack>
+            ) : (
+              <Text color={'#AAA'} fontSize={15}>
+                {dataMovies?.synopsis}
+              </Text>
+            )}
           </VStack>
           <VStack marginY={10}>
             <Text color={'white'} fontSize={22} textAlign={'center'}>

@@ -76,7 +76,12 @@ const Main = () => {
               <Stack.Screen
                 name="MovieDetails"
                 component={MovieDetails}
-                options={{headerShown: false}}
+                options={{
+                  title: '',
+                  headerStyle: {
+                    backgroundColor: '#28907D',
+                  },
+                }}
               />
               <Stack.Screen
                 name="Order"

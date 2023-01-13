@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import BtnMonth from '../components/BtnMonth';
 import CardMovieAll from '../components/CardMovieAll';
 import Footer from '../components/Footer';
 import MainHeader from '../components/MainHeader';
 import {Box, Button, Select, Text} from 'native-base';
 import Icon from 'react-native-vector-icons/dist/Feather';
-import {useNavigation} from '@react-navigation/native';
 import http from '../helpers/http';
 import SkeletonLoadingViewAll from '../components/SkeletonLoadingViewAll';
 
@@ -15,18 +14,13 @@ const ViewAll = () => {
   const [dataMovies, setDataMovies] = useState([]);
   const [sort, setSort] = useState('');
   const [page, setPage] = useState(1);
-  console.log(sort);
-
-  const navigation = useNavigation();
 
   const prev = () => {
     setPage(page - 1);
-    console.log(page);
   };
 
   const next = () => {
     setPage(page + 1);
-    console.log(page);
   };
 
   useEffect(() => {
