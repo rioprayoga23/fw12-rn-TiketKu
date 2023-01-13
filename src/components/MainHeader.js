@@ -2,42 +2,37 @@ import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Avatar, Header, SearchBar} from '@rneui/themed';
 import {StyleSheet, View} from 'react-native';
-import {Pressable} from 'native-base';
+import {Button, Pressable, Text} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/dist/Feather';
 
 const MainHeader = () => {
   const navigation = useNavigation();
-  const login = true;
   return (
     <SafeAreaView>
       <Header
         containerStyle={{
           width: '100%',
           height: 90,
-          paddingTop: 10,
           borderBottomColor: '#28907D',
         }}
         backgroundColor="#28907D">
         <View style={styles.containerItemHEader}>
-          <SearchBar
-            containerStyle={{
-              flex: 1,
-              borderRadius: 15,
-              height: 40,
-              justifyContent: 'center',
-              marginRight: 20,
-            }}
-            inputStyle={{paddingVertical: 1, fontSize: 15}}
-            placeholder="Search movie here"
-            platform="android"
-          />
+          <Button
+            onPress={() => navigation.navigate('SearchResults')}
+            width={20}
+            height={10}
+            flex={1}
+            backgroundColor={'white'}
+            borderRadius={15}
+            marginRight={5}
+            justifyContent={'flex-start'}
+            leftIcon={<Icon name="search" color="black" size={20} />}>
+            <Text fontWeight={'500'}>Search movies here</Text>
+          </Button>
           <Pressable
             onPress={() => {
-              if (!login) {
-                navigation.navigate('SignIn');
-              } else {
-                navigation.navigate('Profile');
-              }
+              navigation.navigate('Profile');
             }}>
             <View>
               <Avatar

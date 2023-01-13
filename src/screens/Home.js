@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   containerHeading: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     marginTop: 20,
   },
   textHeading: {

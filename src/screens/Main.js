@@ -5,7 +5,7 @@ import ResetPassword from './ResetPassword';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import ViewAll from './ViewAll';
-import {NativeBaseProvider, Box} from 'native-base';
+import {NativeBaseProvider, Input, Text, HStack} from 'native-base';
 import MovieDetails from './MovieDetails';
 import Order from './Order';
 import Payment from './Payment';
@@ -13,10 +13,12 @@ import OrderHistory from './OrderHistory';
 import TicketResult from './TicketResult';
 import Profile from './Profile';
 import DetailsAccount from './DetailsAccount';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TabBottom from '../components/TabBottom';
 import {useSelector} from 'react-redux';
+import SearchResults from './SearchResults';
+import MainHeader from '../components/MainHeader';
 
 const Stack = createNativeStackNavigator();
 
@@ -81,6 +83,7 @@ const Main = () => {
                   headerStyle: {
                     backgroundColor: '#28907D',
                   },
+                  headerTintColor: 'white',
                 }}
               />
               <Stack.Screen
@@ -97,6 +100,21 @@ const Main = () => {
                 name="TicketResult"
                 component={TicketResult}
                 options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="SearchResults"
+                component={SearchResults}
+                options={{
+                  headerStyle: {
+                    backgroundColor: '#28907D',
+                  },
+                  headerTintColor: 'white',
+                  headerTitleStyle: {
+                    fontSize: 16,
+                  },
+                  headerTitle: 'Search All Movies',
+                  headerShadowVisible: false,
+                }}
               />
             </>
           )}

@@ -19,7 +19,6 @@ import CardTime from '../components/CardTime';
 import Footer from '../components/Footer';
 import http from '../helpers/http';
 import {Image} from 'react-native';
-import SkeletonLoading from '../components/SkeletonLoading';
 
 const MovieDetails = ({route}) => {
   const [isLoading, setIsLoading] = useState(true);
