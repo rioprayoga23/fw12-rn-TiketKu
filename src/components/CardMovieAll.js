@@ -1,19 +1,19 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 
-import coverSpiderman from '../img/coverSpiderman.png';
-
-const CardMovieAll = () => {
+const CardMovieAll = ({data, dataKey}) => {
   return (
-    <View style={styles.cardMovie}>
+    <View style={styles.cardMovie} key={dataKey}>
       <Image
-        source={coverSpiderman}
-        resizeMode="cover"
+        source={{
+          uri: 'https://fw12-backend-orcin.vercel.app/uploads/' + data.picture,
+        }}
+        resizeMode={'contain'}
         style={{width: 140, height: 220}}
         borderRadius={8}
       />
-      <Text style={styles.titleMovie}>Spiderman</Text>
-      <Text style={styles.genreMovie}>Action, Adventure, Sci-Fi</Text>
+      <Text style={styles.titleMovie}>{data?.title}</Text>
+      <Text style={styles.genreMovie}>{data?.genre}</Text>
     </View>
   );
 };
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   },
   cardMovie: {
     width: 122,
+    height: 320,
     marginRight: 15,
   },
 });

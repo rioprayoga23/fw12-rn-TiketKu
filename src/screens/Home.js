@@ -7,7 +7,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import {Image} from 'native-base';
 import Carousel from 'react-native-snap-carousel';
 import MainHeader from '../components/MainHeader';
 import imgSipderman from '../img/spiderman.jpg';
@@ -51,7 +50,6 @@ const Item = ({img}) => {
 };
 
 const Home = () => {
-  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [dataNowShowing, setDataNowShowing] = useState([]);
   const [dataUpcoming, setDataUpcoming] = useState([]);
@@ -66,7 +64,6 @@ const Home = () => {
       setIsLoading(true);
       setDataNowShowing(data.results);
     } catch (error) {
-      setMessage(error.response.data.message);
       setIsLoading(true);
     }
   };
@@ -143,9 +140,7 @@ const Home = () => {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     {dataNowShowing?.map(movie => {
-                      return (
-                        <CardMovie data={movie} dataKey={shortid.generate()} />
-                      );
+                      return <CardMovie data={movie} dataKey={movie.id} />;
                     })}
                   </ScrollView>
                 )}
@@ -191,7 +186,10 @@ const Home = () => {
                   showsHorizontalScrollIndicator={false}>
                   {dataUpcoming?.map(movie => {
                     return (
-                      <CardMovie data={movie} dataKey={shortid.generate()} />
+                      <CardMovie
+                        data={movie}
+                        dataKey={shortid.generate().toString()}
+                      />
                     );
                   })}
                 </ScrollView>

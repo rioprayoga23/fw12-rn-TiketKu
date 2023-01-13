@@ -11,7 +11,9 @@ const CardMovie = ({data, dataKey}) => {
         }}
         alt={data.title}
         width={122}
-        height={160}
+        height={165}
+        borderRadius={6}
+        resizeMode="contain"
       />
       <Text style={styles.titleMovie}>{data.title}</Text>
       <Text style={styles.genreMovie}>{data.genre}</Text>

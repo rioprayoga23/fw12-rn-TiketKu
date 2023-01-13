@@ -1,16 +1,50 @@
-import React from 'react';
-import {Pressable, ScrollView, StyleSheet, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import BtnMonth from '../components/BtnMonth';
 import CardMovieAll from '../components/CardMovieAll';
 import Footer from '../components/Footer';
 import MainHeader from '../components/MainHeader';
-import {Actionsheet, Button, Stack, Text, useDisclose} from 'native-base';
+import {Box, Button, Select, Text} from 'native-base';
 import Icon from 'react-native-vector-icons/dist/Feather';
 import {useNavigation} from '@react-navigation/native';
+import http from '../helpers/http';
+import SkeletonLoadingViewAll from '../components/SkeletonLoadingViewAll';
 
 const ViewAll = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataMovies, setDataMovies] = useState([]);
+  const [sort, setSort] = useState('');
+  const [page, setPage] = useState(1);
+  console.log(sort);
+
   const navigation = useNavigation();
-  const {isOpen, onOpen, onClose} = useDisclose();
+
+  const prev = () => {
+    setPage(page - 1);
+    console.log(page);
+  };
+
+  const next = () => {
+    setPage(page + 1);
+    console.log(page);
+  };
+
+  useEffect(() => {
+    const getAllMovie = async () => {
+      try {
+        setIsLoading(false);
+        const {data} = await http().get(
+          `/movies?limit=6&sortBy=title&sort=${sort}&page=${page}`,
+        );
+        setIsLoading(true);
+        setDataMovies(data.results);
+      } catch (error) {
+        setIsLoading(true);
+      }
+    };
+    getAllMovie();
+  }, [sort, page]);
+
   return (
     <>
       <MainHeader />
@@ -46,111 +80,103 @@ const ViewAll = () => {
               paddingRight: 35,
               marginTop: 30,
             }}>
-            <Button
-              onPress={onOpen}
-              width="90px"
-              flexDirection="row"
-              backgroundColor="#28907D"
-              borderRadius={7}>
-              <Stack space={2} direction="row" alignItems="center">
-                <Text fontSize={15} color="white" fontWeight={'500'}>
-                  Sort
-                </Text>
-                <Icon name="filter" size={20} color="white" />
-              </Stack>
-            </Button>
-            <Actionsheet isOpen={isOpen} onClose={onClose}>
-              <Actionsheet.Content>
-                <Actionsheet.Item>Option 1</Actionsheet.Item>
-                <Actionsheet.Item>Option 2</Actionsheet.Item>
-                <Actionsheet.Item>Option 3</Actionsheet.Item>
-                <Actionsheet.Item color="red.500">Delete</Actionsheet.Item>
-              </Actionsheet.Content>
-            </Actionsheet>
+            <Box width="100px" bg={'#0A2647'} borderRadius={15}>
+              <Select
+                selectedValue={sort}
+                w="full"
+                h="9"
+                accessibilityLabel="Sort"
+                placeholder="Sort"
+                color={'white'}
+                fontSize={15}
+                borderWidth={0}
+                placeholderTextColor={'white'}
+                padding={0}
+                _selectedItem={{
+                  bg: 'teal.600',
+                }}
+                mt={1}
+                onValueChange={itemValue => setSort(itemValue)}>
+                <Select.Item label="A-Z" value="ASC" />
+                <Select.Item label="Z-A" value="DESC" />
+              </Select>
+            </Box>
           </View>
 
           <View style={styles.main}>
-            <View
-              style={{
-                flexGrow: 1,
-                marginBottom: 40,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Pressable onPress={() => navigation.navigate('MovieDetails')}>
-                <CardMovieAll />
-              </Pressable>
-            </View>
-            <View
-              style={{
-                flexGrow: 1,
-                marginBottom: 40,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <CardMovieAll />
-            </View>
-            <View
-              style={{
-                flexGrow: 1,
-                marginBottom: 40,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <CardMovieAll />
-            </View>
-            <View
-              style={{
-                flexGrow: 1,
-                marginBottom: 40,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <CardMovieAll />
-            </View>
-            <View
-              style={{
-                flexGrow: 1,
-                marginBottom: 40,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <CardMovieAll />
-            </View>
-            <View
-              style={{
-                flexGrow: 1,
-                marginBottom: 40,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <CardMovieAll />
-            </View>
+            {!isLoading ? (
+              <>
+                <View
+                  style={{
+                    flexGrow: 1,
+                    marginBottom: 40,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <SkeletonLoadingViewAll />
+                </View>
+                <View
+                  style={{
+                    flexGrow: 1,
+                    marginBottom: 40,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <SkeletonLoadingViewAll />
+                </View>
+                <View
+                  style={{
+                    flexGrow: 1,
+                    marginBottom: 40,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <SkeletonLoadingViewAll />
+                </View>
+                <View
+                  style={{
+                    flexGrow: 1,
+                    marginBottom: 40,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <SkeletonLoadingViewAll />
+                </View>
+              </>
+            ) : (
+              dataMovies?.map(movie => {
+                return (
+                  <View
+                    style={{
+                      flexGrow: 1,
+                      marginBottom: 40,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <CardMovieAll data={movie} dataKey={movie.id} />
+                  </View>
+                );
+              })
+            )}
           </View>
 
           <View style={styles.pagination}>
-            <View
-              style={{
-                padding: 10,
-                width: 60,
-                backgroundColor: '#28907D',
-                alignItems: 'center',
-                borderRadius: 8,
-                margin: 10,
-              }}>
-              <Text style={{color: 'white'}}>Prev</Text>
-            </View>
-            <View
-              style={{
-                padding: 10,
-                width: 60,
-                backgroundColor: '#28907D',
-                alignItems: 'center',
-                borderRadius: 8,
-                margin: 5,
-              }}>
-              <Text style={{color: 'white'}}>Next</Text>
-            </View>
+            <Button
+              onPress={() => prev()}
+              isDisabled={page === 1}
+              leftIcon={<Icon name="chevron-left" size={20} />}
+              backgroundColor={'#28907D'}
+              marginX={2}>
+              Prev
+            </Button>
+            <Button
+              onPress={() => next()}
+              isDisabled={dataMovies.length === 0}
+              rightIcon={<Icon name="chevron-right" size={20} />}
+              backgroundColor={'#28907D'}
+              marginX={2}>
+              Next
+            </Button>
           </View>
 
           <Footer />
