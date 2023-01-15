@@ -1,13 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Avatar, Header, SearchBar} from '@rneui/themed';
+import {Header} from '@rneui/themed';
 import {StyleSheet, View} from 'react-native';
-import {Button, Pressable, Text} from 'native-base';
+import {Avatar, Button, Pressable, Text} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {getProfileAction} from '../redux/actions/profile';
 import Icon from 'react-native-vector-icons/dist/Feather';
+
+import avatarIcon from '../img/avatar.jpg';
 
 const MainHeader = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const {token} = useSelector(state => state.auth);
+  const {user} = useSelector(state => state.profile);
+
+  useEffect(() => {
+    dispatch(getProfileAction());
+  }, [dispatch, token]);
+
   return (
     <SafeAreaView>
       <Header
@@ -35,11 +47,11 @@ const MainHeader = () => {
               navigation.navigate('Profile');
             }}>
             <View>
-              <Avatar
-                size={43}
-                rounded
-                source={{uri: 'https://randomuser.me/api/portraits/men/36.jpg'}}
-              />
+              {user?.picture ? (
+                <Avatar source={{uri: user.picture}} />
+              ) : (
+                <Avatar source={avatarIcon} />
+              )}
             </View>
           </Pressable>
         </View>
