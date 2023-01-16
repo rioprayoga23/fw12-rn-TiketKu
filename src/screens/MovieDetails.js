@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
 import {
-  Actionsheet,
   Box,
   Button,
   HStack,
@@ -9,24 +8,35 @@ import {
   Skeleton,
   Stack,
   Text,
-  useDisclose,
   VStack,
+  Select,
+  Pressable,
 } from 'native-base';
+import {Image} from 'react-native';
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
+import http from '../helpers/http';
+import moment from 'moment';
+import {useDispatch} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/dist/Feather';
-import CardTime from '../components/CardTime';
 import Footer from '../components/Footer';
-import http from '../helpers/http';
-import {Image} from 'react-native';
+import logoEbu from '../img/ebu.png';
+import {chooseMovie} from '../redux/reducers/transactions';
+import {useNavigation} from '@react-navigation/native';
 
 const MovieDetails = ({route}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [dataMovies, setDataMovies] = useState([]);
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date(moment().format('YYYY-MM-DD')));
+  const [cityList, setCityList] = useState([]);
+  const [city, setCity] = useState('');
+  const [schedule, setSchedule] = useState([]);
+  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedCinema, setSelectedCinema] = useState(null);
 
-  const {isOpen, onOpen, onClose} = useDisclose();
   const movieId = route?.params?.id;
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -45,6 +55,63 @@ const MovieDetails = ({route}) => {
   const showDatepicker = () => {
     showMode('date');
   };
+
+  const dateFormat = params => {
+    return moment(params).format('YYYY-MM-DD');
+  };
+
+  useEffect(() => {
+    const getSchedules = async () => {
+      let resultDate = dateFormat(date);
+      try {
+        const {data} = await http().get(`movieSchedules/${movieId}/byMovieId`, {
+          params: {date: resultDate, city},
+        });
+        setSchedule(data.results);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getSchedules();
+  }, [movieId, date, city]);
+
+  const selectTime = (time, cinema) => {
+    setSelectedTime(time);
+    setSelectedCinema(cinema);
+  };
+
+  const doBook = async (price, cinemaName) => {
+    await dispatch(
+      chooseMovie({
+        movieId: movieId,
+        title: dataMovies.title,
+        cinemaId: selectedCinema,
+        cinemaName,
+        bookingDate: dateFormat(date),
+        bookingTime: selectedTime,
+        price: price,
+      }),
+    );
+    navigation.navigate('Order');
+  };
+
+  useEffect(() => {
+    const getCityList = async () => {
+      let resultDate = dateFormat(date);
+      try {
+        const {data} = await http().get(`/movies/${movieId}/schedules/city`, {
+          params: {date: resultDate},
+        });
+        setCityList(data.results);
+        if (data.results.length) {
+          setCity(data.results[0].city);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getCityList();
+  }, [date, movieId]);
 
   useEffect(() => {
     const getAllMovie = async () => {
@@ -203,6 +270,7 @@ const MovieDetails = ({route}) => {
 
             <HStack space={2} justifyContent={'space-between'} paddingY={5}>
               <Button
+                height={'43px'}
                 flex={1}
                 borderRadius={8}
                 onPress={showDatepicker}
@@ -211,36 +279,97 @@ const MovieDetails = ({route}) => {
                 rightIcon={
                   <Icon name="chevron-down" color="white" size={20} />
                 }>
-                <Text fontSize={15} color={'white'} paddingX={3}>
+                <Text fontSize={15} color={'white'}>
                   Set a date
                 </Text>
               </Button>
-              <Button
+              <Box
                 flex={1}
-                borderRadius={8}
-                onPress={onOpen}
+                height={'43px'}
                 backgroundColor={'#28907D'}
-                leftIcon={<Icon name="map-pin" color="white" size={20} />}
-                rightIcon={
-                  <Icon name="chevron-down" color="white" size={20} />
-                }>
-                <Text fontSize={15} color={'white'} paddingX={3}>
-                  Set a city
-                </Text>
-              </Button>
-              <Actionsheet isOpen={isOpen} onClose={onClose}>
-                <Actionsheet.Content>
-                  <Actionsheet.Item>Bandung</Actionsheet.Item>
-                  <Actionsheet.Item>Semarang</Actionsheet.Item>
-                  <Actionsheet.Item>Jakarta</Actionsheet.Item>
-                  <Actionsheet.Item color="red.500">Delete</Actionsheet.Item>
-                </Actionsheet.Content>
-              </Actionsheet>
+                borderRadius={8}>
+                <Select
+                  selectedValue={city}
+                  accessibilityLabel={city}
+                  placeholder="Set a city"
+                  height={'full'}
+                  color={'white'}
+                  fontSize={15}
+                  borderWidth={0}
+                  placeholderTextColor={'white'}
+                  _selectedItem={{
+                    bg: 'teal.600',
+                  }}
+                  onValueChange={itemValue => setCity(itemValue)}>
+                  {cityList?.map(item => (
+                    <Select.Item label={item.city} value={item.city} />
+                  ))}
+                </Select>
+              </Box>
             </HStack>
 
             <VStack space={4}>
-              <CardTime />
-              <CardTime />
+              {schedule?.map(cinema => (
+                <VStack>
+                  <Box backgroundColor={'#0A2647'} borderRadius={8} padding={5}>
+                    <VStack space={3} alignItems={'center'}>
+                      <Image source={logoEbu} alt="ebu" />
+                      <Text color="white" fontSize={18} textAlign="center">
+                        {cinema.city}
+                      </Text>
+                      <Text color="#AAA" fontSize={15} textAlign="center">
+                        {cinema.address}
+                      </Text>
+                      <Box
+                        width={'100%'}
+                        borderBottomColor="white"
+                        borderWidth={0.8}
+                        marginY={3}
+                      />
+                    </VStack>
+                    <HStack flexWrap={'wrap'} space={4}>
+                      {cinema.time?.map(time => (
+                        <Pressable onPress={() => selectTime(time, cinema.id)}>
+                          <Text
+                            color={
+                              cinema.id === selectedCinema &&
+                              time === selectedTime
+                                ? '#28907D'
+                                : 'white'
+                            }
+                            fontWeight={'bold'}
+                            fontSize={15}
+                            marginBottom={4}>
+                            {time}
+                          </Text>
+                        </Pressable>
+                      ))}
+
+                      <HStack
+                        width={'full'}
+                        justifyContent={'space-between'}
+                        marginTop={6}>
+                        <Text color={'white'} fontSize={20}>
+                          Price
+                        </Text>
+                        <Text
+                          color={'#28907D'}
+                          fontSize={22}
+                          fontWeight={'bold'}>
+                          {cinema.price}/seat
+                        </Text>
+                      </HStack>
+                    </HStack>
+                    <Button
+                      isDisabled={selectedCinema !== cinema.id}
+                      onPress={() => doBook(cinema.price, cinema.name)}
+                      backgroundColor={'#28907D'}
+                      marginTop={10}>
+                      Book Now
+                    </Button>
+                  </Box>
+                </VStack>
+              ))}
             </VStack>
           </VStack>
         </VStack>

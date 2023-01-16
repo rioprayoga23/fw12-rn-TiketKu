@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import auth from './auth';
 import profile from './profile';
+import transactions from './transactions';
 
 const authConfig = {
   key: 'auth',
@@ -19,6 +20,7 @@ const profileConfig = {
 const reducer = combineReducers({
   auth: persistReducer(authConfig, auth),
   profile: persistReducer(profileConfig, profile),
+  transactions,
 });
 
 export default reducer;

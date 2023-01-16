@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   Button,
@@ -15,9 +15,37 @@ import MainHeader from '../components/MainHeader';
 import Icon from 'react-native-vector-icons/dist/Feather';
 import LogoEbu from '../img/ebu.png';
 import Footer from '../components/Footer';
-import BtnFormAction from '../components/BtnFormAction';
+import {useDispatch, useSelector} from 'react-redux';
+import {chooseSeat} from '../redux/reducers/transactions';
+import {useNavigation} from '@react-navigation/native';
 
 const Order = () => {
+  const {price} = useSelector(state => state.transactions);
+  const {bookingTime} = useSelector(state => state.transactions);
+  const {bookingDate} = useSelector(state => state.transactions);
+  const {title} = useSelector(state => state.transactions);
+  const {cinemaName} = useSelector(state => state.transactions);
+
+  const [selectedSeat, setSelectedSeat] = useState([]);
+
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const selectSeat = seat => {
+    if (selectedSeat.includes(seat)) {
+      setSelectedSeat([...selectedSeat.filter(i => i !== seat)]);
+    } else {
+      setSelectedSeat([...selectedSeat, seat]);
+    }
+  };
+
+  const doCheckout = () => {
+    dispatch(
+      chooseSeat({seatNum: selectedSeat, total: selectedSeat?.length * price}),
+    );
+    navigation.navigate('Payment');
+  };
+
   return (
     <Stack direction={'column'} backgroundColor={'#161621'} flex={1}>
       <MainHeader />
@@ -30,40 +58,60 @@ const Order = () => {
             <Box borderBottomWidth={6} borderColor={'#28907D'} />
             <HStack ml={'5px'} mt={5}>
               <View flex={1}>
-                {['', '', '', '', '', '', ''].map((rows, i) => {
+                {['A', 'B', 'C', 'D', 'E', 'F', 'G', ' '].map((alfabet, i) => {
                   return (
                     <HStack key={i}>
-                      {[0, 1, 2, 3, 4, 5, 6].map((num, i) => {
-                        return (
-                          <Pressable
-                            key={i}
-                            width={'16px'}
-                            height={'16px'}
-                            bg={'#D6D8E7'}
-                            mr={'5px'}
-                            mb={'5px'}
-                          />
-                        );
+                      {[0, 1, 2, 3, 4, 5, 6, 7].map((num, i) => {
+                        if (num > 0) {
+                          if (alfabet !== ' ') {
+                            const seatNumber = `${alfabet}${num}`;
+                            return (
+                              <Pressable
+                                key={i}
+                                onPress={() => selectSeat(seatNumber)}
+                                width={'16px'}
+                                height={'16px'}
+                                bg={
+                                  (selectedSeat.includes(seatNumber) &&
+                                    '#28907D') ||
+                                  '#D6D8E7'
+                                }
+                                mr={'5px'}
+                                mb={'5px'}
+                              />
+                            );
+                          }
+                        }
                       })}
                     </HStack>
                   );
                 })}
               </View>
               <View flex={1} alignItems={'flex-end'}>
-                {['', '', '', '', '', '', ''].map((rows, i) => {
+                {['A', 'B', 'C', 'D', 'E', 'F', 'G', ' '].map((alfabet, i) => {
                   return (
                     <HStack key={i}>
-                      {[0, 1, 2, 3, 4, 5, 6].map((num, i) => {
-                        return (
-                          <Pressable
-                            key={i}
-                            width={'16px'}
-                            height={'16px'}
-                            bg={'#D6D8E7'}
-                            mr={'5px'}
-                            mb={'5px'}
-                          />
-                        );
+                      {[0, 8, 9, 10, 11, 12, 13, 14].map((num, i) => {
+                        if (num > 0) {
+                          if (alfabet !== ' ') {
+                            const seatNumber = `${alfabet}${num}`;
+                            return (
+                              <Pressable
+                                key={i}
+                                onPress={() => selectSeat(seatNumber)}
+                                width={'16px'}
+                                height={'16px'}
+                                bg={
+                                  (selectedSeat.includes(seatNumber) &&
+                                    '#28907D') ||
+                                  '#D6D8E7'
+                                }
+                                mr={'5px'}
+                                mb={'5px'}
+                              />
+                            );
+                          }
+                        }
                       })}
                     </HStack>
                   );
@@ -130,19 +178,19 @@ const Order = () => {
             <VStack alignItems={'center'} space={2} mb={7}>
               <Image source={LogoEbu} alt={'logoEbu'} />
               <Text color={'white'} fontSize={24}>
-                CineOne21 Cinema
+                {cinemaName}
               </Text>
               <Text color={'white'} fontSize={18}>
-                Spider-Man: Homecoming
+                {title}
               </Text>
             </VStack>
             <VStack space={2}>
               <HStack>
                 <Text flex={1} color={'#AAA'} fontSize={16}>
-                  Tuesday, 07 July 2020
+                  {bookingDate}
                 </Text>
                 <Text fontSize={18} color={'white'}>
-                  02:00pm
+                  {bookingTime}
                 </Text>
               </HStack>
               <HStack>
@@ -150,16 +198,18 @@ const Order = () => {
                   One ticket price
                 </Text>
                 <Text fontSize={18} color={'white'}>
-                  $10
+                  {price}
                 </Text>
               </HStack>
               <HStack>
                 <Text flex={1} color={'#AAA'} fontSize={16}>
                   Seat choosed
                 </Text>
-                <Text fontSize={18} color={'white'}>
-                  C4, C5, C6
-                </Text>
+                {selectedSeat?.map(seat => (
+                  <Text fontSize={18} color={'white'} key={seat}>
+                    {seat + ' '}
+                  </Text>
+                ))}
               </HStack>
             </VStack>
             <Box borderBottomColor={'white'} borderBottomWidth={0.8} my={5} />
@@ -168,11 +218,16 @@ const Order = () => {
                 Total Payment
               </Text>
               <Text fontSize={25} color={'#28907D'}>
-                $30
+                {selectedSeat?.length * price}
               </Text>
             </HStack>
           </VStack>
-          <BtnFormAction title={'Checkout Now'} navigationPath="Payment" />
+          <Button
+            onPress={() => doCheckout()}
+            background={'#28907D'}
+            borderRadius={8}>
+            Checkout Now
+          </Button>
         </VStack>
         <Footer />
       </ScrollView>

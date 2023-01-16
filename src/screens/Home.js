@@ -140,7 +140,9 @@ const Home = () => {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     {dataNowShowing?.map(movie => {
-                      return <CardMovie data={movie} dataKey={movie.id} />;
+                      return (
+                        <CardMovie data={movie} dataKey={String(movie.id)} />
+                      );
                     })}
                   </ScrollView>
                 )}

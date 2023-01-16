@@ -2,13 +2,15 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Image} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const CardMovie = ({data, dataKey}) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('MovieDetails', {id: data?.id})}>
-      <View style={styles.cardMovie} key={dataKey}>
+      onPress={() => navigation.navigate('MovieDetails', {id: data?.id})}
+      key={dataKey}>
+      <View style={styles.cardMovie}>
         <Image
           source={{
             uri:

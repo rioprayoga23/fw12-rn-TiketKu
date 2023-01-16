@@ -10,7 +10,6 @@ import {
   Text,
   VStack,
   Button,
-  useToast,
   HStack,
   Spinner,
 } from 'native-base';
@@ -68,7 +67,6 @@ const DetailsAccount = () => {
   const {token} = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
-  const toast = useToast();
 
   const doUpdatePassword = async value => {
     if (value.password === value.confirmPassword) {
