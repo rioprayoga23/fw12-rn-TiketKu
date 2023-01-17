@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
@@ -141,7 +142,13 @@ const Home = () => {
                     showsHorizontalScrollIndicator={false}>
                     {dataNowShowing?.map(movie => {
                       return (
-                        <CardMovie data={movie} dataKey={String(movie.id)} />
+                        <TouchableOpacity
+                          onPress={() =>
+                            navigation.navigate('MovieDetails', {id: movie?.id})
+                          }
+                          key={shortid.generate().toString()}>
+                          <CardMovie data={movie} dataKey={movie.id} />
+                        </TouchableOpacity>
                       );
                     })}
                   </ScrollView>
@@ -188,10 +195,13 @@ const Home = () => {
                   showsHorizontalScrollIndicator={false}>
                   {dataUpcoming?.map(movie => {
                     return (
-                      <CardMovie
-                        data={movie}
-                        dataKey={shortid.generate().toString()}
-                      />
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate('MovieDetails', {id: movie?.id})
+                        }
+                        key={shortid.generate().toString()}>
+                        <CardMovie data={movie} dataKey={movie.id} />
+                      </TouchableOpacity>
                     );
                   })}
                 </ScrollView>

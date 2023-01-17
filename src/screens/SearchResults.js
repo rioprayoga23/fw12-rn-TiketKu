@@ -15,6 +15,7 @@ import Feather from 'react-native-vector-icons/dist/Feather';
 import http from '../helpers/http';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import shortid from 'shortid';
 
 const SearchResults = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -99,7 +100,8 @@ const SearchResults = () => {
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('MovieDetails', {id: movie?.id})
-                }>
+                }
+                key={shortid.generate().toString()}>
                 <HStack
                   px={5}
                   py={5}

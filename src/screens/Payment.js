@@ -47,21 +47,22 @@ const Payment = () => {
 
   const [selectedPayment, setSelectedPayment] = useState('');
 
-  const doPay = value => {
+  const doPay = async value => {
     if (selectedPayment) {
       const dataTrx = {
         bookingDate,
         movieId,
         cinemaId,
-        bookingTime,
         email: value.email,
         fullName: value.fullName,
         paymentMethodId: selectedPayment,
         phoneNumber: value.phoneNumber,
         seatNum: seatNum[0],
+        total,
+        bookingTime,
       };
-      // console.log(dataTrx);
-      dispatch(transactionAction({dataTrx}));
+      await dispatch(transactionAction({dataTrx}));
+      navigation.navigate('Profile');
     } else {
       console.log('Isi dulu payment method');
     }

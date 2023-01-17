@@ -23,6 +23,7 @@ import Footer from '../components/Footer';
 import logoEbu from '../img/ebu.png';
 import {chooseMovie} from '../redux/reducers/transactions';
 import {useNavigation} from '@react-navigation/native';
+import shortid from 'shortid';
 
 const MovieDetails = ({route}) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -302,7 +303,11 @@ const MovieDetails = ({route}) => {
                   }}
                   onValueChange={itemValue => setCity(itemValue)}>
                   {cityList?.map(item => (
-                    <Select.Item label={item.city} value={item.city} />
+                    <Select.Item
+                      label={item.city}
+                      value={item.city}
+                      key={shortid.generate().toString()}
+                    />
                   ))}
                 </Select>
               </Box>
@@ -310,7 +315,7 @@ const MovieDetails = ({route}) => {
 
             <VStack space={4}>
               {schedule?.map(cinema => (
-                <VStack>
+                <VStack key={shortid.generate().toString()}>
                   <Box backgroundColor={'#0A2647'} borderRadius={8} padding={5}>
                     <VStack space={3} alignItems={'center'}>
                       <Image source={logoEbu} alt="ebu" />
@@ -329,7 +334,9 @@ const MovieDetails = ({route}) => {
                     </VStack>
                     <HStack flexWrap={'wrap'} space={4}>
                       {cinema.time?.map(time => (
-                        <Pressable onPress={() => selectTime(time, cinema.id)}>
+                        <Pressable
+                          onPress={() => selectTime(time, cinema.id)}
+                          key={shortid.generate().toString()}>
                           <Text
                             color={
                               cinema.id === selectedCinema &&

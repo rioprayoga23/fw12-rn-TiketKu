@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, useWindowDimensions} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {useDispatch} from 'react-redux';
 import MainHeader from '../components/MainHeader';
+import {transactionHistoryAction} from '../redux/actions/transactionsHistory';
 import DetailsAccount from './DetailsAccount';
 import OrderHistory from './OrderHistory';
 
@@ -13,6 +15,7 @@ const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
 });
+
 const Profile = () => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);

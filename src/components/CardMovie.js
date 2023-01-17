@@ -1,31 +1,23 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Image} from 'native-base';
-import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
 
-const CardMovie = ({data, dataKey}) => {
-  const navigation = useNavigation();
+const CardMovie = ({data}) => {
   return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('MovieDetails', {id: data?.id})}
-      key={dataKey}>
-      <View style={styles.cardMovie}>
-        <Image
-          source={{
-            uri:
-              'https://fw12-backend-orcin.vercel.app/uploads/' + data.picture,
-          }}
-          alt={data.title}
-          width={122}
-          height={165}
-          borderRadius={6}
-          resizeMode="contain"
-        />
-        <Text style={styles.titleMovie}>{data.title}</Text>
-        <Text style={styles.genreMovie}>{data.genre}</Text>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.cardMovie}>
+      <Image
+        source={{
+          uri: 'https://fw12-backend-orcin.vercel.app/uploads/' + data.picture,
+        }}
+        alt={data.title}
+        width={122}
+        height={165}
+        borderRadius={6}
+        resizeMode="contain"
+      />
+      <Text style={styles.titleMovie}>{data.title}</Text>
+      <Text style={styles.genreMovie}>{data.genre}</Text>
+    </View>
   );
 };
 

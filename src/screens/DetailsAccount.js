@@ -12,6 +12,7 @@ import {
   Button,
   HStack,
   Spinner,
+  useToast,
 } from 'native-base';
 // import {ToastAndroid} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Feather';
@@ -67,6 +68,7 @@ const DetailsAccount = () => {
   const {token} = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const doUpdatePassword = async value => {
     if (value.password === value.confirmPassword) {
@@ -146,7 +148,7 @@ const DetailsAccount = () => {
         }
       } else {
         toast.show({
-          title: 'Image size is too large',
+          title: 'Max size 4mb,',
           placement: 'top',
         });
       }

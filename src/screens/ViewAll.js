@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import BtnMonth from '../components/BtnMonth';
 import CardMovieAll from '../components/CardMovieAll';
 import Footer from '../components/Footer';
@@ -8,12 +8,16 @@ import {Box, Button, Select, Text} from 'native-base';
 import Icon from 'react-native-vector-icons/dist/Feather';
 import http from '../helpers/http';
 import SkeletonLoadingViewAll from '../components/SkeletonLoadingViewAll';
+import shortid from 'shortid';
+import {useNavigation} from '@react-navigation/native';
 
 const ViewAll = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [dataMovies, setDataMovies] = useState([]);
   const [sort, setSort] = useState('');
   const [page, setPage] = useState(1);
+
+  const navigation = useNavigation();
 
   const prev = () => {
     setPage(page - 1);
@@ -140,15 +144,20 @@ const ViewAll = () => {
             ) : (
               dataMovies?.map(movie => {
                 return (
-                  <View
-                    style={{
-                      flexGrow: 1,
-                      marginBottom: 40,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <CardMovieAll data={movie} dataKey={movie.id} />
-                  </View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('MovieDetails', {id: movie?.id})
+                    }
+                    key={shortid.generate().toString()}>
+                    <View
+                      style={{
+                        padding: 15,
+                        flexGrow: 1,
+                        marginBottom: 20,
+                      }}>
+                      <CardMovieAll data={movie} />
+                    </View>
+                  </TouchableOpacity>
                 );
               })
             )}
