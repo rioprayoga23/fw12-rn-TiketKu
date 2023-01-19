@@ -60,7 +60,6 @@ const Main = () => {
                 component={TabBottom}
                 options={{headerShown: false}}
               />
-
               <Stack.Screen
                 name="Home"
                 component={Home}
@@ -84,23 +83,54 @@ const Main = () => {
                   headerStyle: {
                     backgroundColor: '#28907D',
                   },
+                  headerTitleStyle: {
+                    fontSize: 16,
+                  },
                   headerTintColor: 'white',
                 }}
               />
               <Stack.Screen
                 name="Order"
                 component={Order}
-                options={{headerShown: false}}
+                options={{
+                  title: '',
+                  headerStyle: {
+                    backgroundColor: '#28907D',
+                  },
+                  headerTitleStyle: {
+                    fontSize: 16,
+                  },
+                  headerTintColor: 'white',
+                }}
               />
               <Stack.Screen
                 name="Payment"
                 component={Payment}
-                options={{headerShown: false}}
+                options={{
+                  title: '',
+                  headerStyle: {
+                    backgroundColor: '#28907D',
+                  },
+                  headerTitleStyle: {
+                    fontSize: 16,
+                  },
+                  headerTintColor: 'white',
+                  headerShadowVisible: false,
+                }}
               />
               <Stack.Screen
                 name="TicketResult"
                 component={TicketResult}
-                options={{headerShown: false}}
+                options={{
+                  title: 'Ticket Result',
+                  headerStyle: {
+                    backgroundColor: '#28907D',
+                  },
+                  headerTitleStyle: {
+                    fontSize: 16,
+                  },
+                  headerTintColor: 'white',
+                }}
               />
               <Stack.Screen
                 name="SearchResults"

@@ -27,6 +27,7 @@ import shortid from 'shortid';
 
 const MovieDetails = ({route}) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingBtn, setIsLoadingBtn] = useState(true);
   const [dataMovies, setDataMovies] = useState([]);
   const [date, setDate] = useState(new Date(moment().format('YYYY-MM-DD')));
   const [cityList, setCityList] = useState([]);
@@ -82,6 +83,7 @@ const MovieDetails = ({route}) => {
   };
 
   const doBook = async (price, cinemaName) => {
+    setIsLoadingBtn(false);
     await dispatch(
       chooseMovie({
         movieId: movieId,
@@ -93,6 +95,7 @@ const MovieDetails = ({route}) => {
         price: price,
       }),
     );
+    setIsLoadingBtn(true);
     navigation.navigate('Order');
   };
 
@@ -368,6 +371,7 @@ const MovieDetails = ({route}) => {
                       </HStack>
                     </HStack>
                     <Button
+                      isLoading={!isLoadingBtn}
                       isDisabled={selectedCinema !== cinema.id}
                       onPress={() => doBook(cinema.price, cinema.name)}
                       backgroundColor={'#28907D'}

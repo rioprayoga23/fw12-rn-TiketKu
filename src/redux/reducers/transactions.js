@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {transactionAction} from '../actions/transactions';
 
 const initialState = {
+  trxId: null,
   movieId: null,
   title: null,
   cinemaId: null,
@@ -15,7 +16,7 @@ const initialState = {
   fullName: null,
   email: null,
   phoneNumber: null,
-  isLoading: true,
+  isLoadingBtn: true,
   message: null,
 };
 
@@ -39,10 +40,15 @@ const transactionsReducer = createSlice({
     },
   },
   extraReducers: build => {
+    build.addCase(transactionAction.pending, (state, {payload}) => {
+      state.isLoadingBtn = false;
+    });
+    build.addCase(transactionAction.rejected, (state, {payload}) => {
+      state.isLoadingBtn = false;
+    });
     build.addCase(transactionAction.fulfilled, (state, {payload}) => {
-      state.isLoading = true;
-      state.message = payload.message;
-      console.log(payload);
+      state.trxId = payload;
+      state.isLoadingBtn = true;
     });
   },
 });

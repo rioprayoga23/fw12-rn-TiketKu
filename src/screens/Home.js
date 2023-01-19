@@ -52,8 +52,10 @@ const Item = ({img}) => {
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingTwo, setIsLoadingTwo] = useState(true);
   const [dataNowShowing, setDataNowShowing] = useState([]);
   const [dataUpcoming, setDataUpcoming] = useState([]);
+  const [month, setMonth] = useState('January');
   const navigation = useNavigation();
 
   const renderItem = ({item}) => <Item img={item.img} />;
@@ -69,22 +71,22 @@ const Home = () => {
     }
   };
 
-  const getUpcoming = async () => {
-    try {
-      setIsLoading(false);
-      const {data} = await http().get('/movies/upcoming');
-      setIsLoading(true);
-      setDataUpcoming(data.results);
-    } catch (error) {
-      setMessage(error.response.data.message);
-      setIsLoading(true);
-    }
-  };
-
   useEffect(() => {
     getNowShowing();
+
+    const getUpcoming = async () => {
+      try {
+        setIsLoadingTwo(false);
+        const {data} = await http().get(`/movies/upcoming?month=${month}`);
+        setIsLoadingTwo(true);
+        setDataUpcoming(data.results);
+      } catch (error) {
+        setIsLoadingTwo(true);
+      }
+    };
     getUpcoming();
-  }, []);
+  }, [month]);
+
   return (
     <>
       <MainHeader />
@@ -166,22 +168,82 @@ const Home = () => {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}>
-                <BtnMonth title="January" active={true} />
-                <BtnMonth title="Februari" />
-                <BtnMonth title="March" />
-                <BtnMonth title="April" />
-                <BtnMonth title="Mei" />
-                <BtnMonth title="June" />
-                <BtnMonth title="July" />
-                <BtnMonth title="August" />
-                <BtnMonth title="September" />
-                <BtnMonth title="October" />
-                <BtnMonth title="November" />
-                <BtnMonth title="December" />
+                <Pressable onPress={() => setMonth('January')}>
+                  <BtnMonth
+                    title="January"
+                    active={month !== 'January' ? false : true}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setMonth('February')}>
+                  <BtnMonth
+                    title="February"
+                    active={month !== 'February' ? false : true}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setMonth('March')}>
+                  <BtnMonth
+                    title="March"
+                    active={month !== 'March' ? false : true}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setMonth('April')}>
+                  <BtnMonth
+                    title="April"
+                    active={month !== 'April' ? false : true}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setMonth('Meil')}>
+                  <BtnMonth
+                    title="Mei"
+                    active={month !== 'Mei' ? false : true}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setMonth('June')}>
+                  <BtnMonth
+                    title="June"
+                    active={month !== 'June' ? false : true}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setMonth('July')}>
+                  <BtnMonth
+                    title="July"
+                    active={month !== 'July' ? false : true}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setMonth('August')}>
+                  <BtnMonth
+                    title="August"
+                    active={month !== 'August' ? false : true}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setMonth('September')}>
+                  <BtnMonth
+                    title="September"
+                    active={month !== 'September' ? false : true}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setMonth('October')}>
+                  <BtnMonth
+                    title="October"
+                    active={month !== 'October' ? false : true}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setMonth('November')}>
+                  <BtnMonth
+                    title="November"
+                    active={month !== 'November' ? false : true}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setMonth('Desember')}>
+                  <BtnMonth
+                    title="Desember"
+                    active={month !== 'Desember' ? false : true}
+                  />
+                </Pressable>
               </ScrollView>
             </View>
             <View style={styles.containerMainUp}>
-              {!isLoading ? (
+              {!isLoadingTwo ? (
                 <ScrollView
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}>

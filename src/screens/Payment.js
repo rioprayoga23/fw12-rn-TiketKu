@@ -8,10 +8,12 @@ import {
   Input,
   Pressable,
   ScrollView,
+  Skeleton,
   Stack,
   Text,
   VStack,
 } from 'native-base';
+import {ToastAndroid, Alert} from 'react-native';
 import MainHeader from '../components/MainHeader';
 import Footer from '../components/Footer';
 import {useNavigation} from '@react-navigation/native';
@@ -28,7 +30,7 @@ YupPassword(Yup); // extend yup
 
 const personalInfoSchema = Yup.object({
   fullName: Yup.string().required('Required'),
-  email: Yup.string().required('Required').email('Invalid email address'),
+  email: Yup.string().email('Invalid email address').required('Required'),
   phoneNumber: Yup.string().required('Required'),
 });
 
@@ -39,6 +41,7 @@ const Payment = () => {
   const {cinemaId} = useSelector(state => state.transactions);
   const {bookingTime} = useSelector(state => state.transactions);
   const {seatNum} = useSelector(state => state.transactions);
+  const {isLoadingBtn} = useSelector(state => state.transactions);
 
   const [isLoading, setIsLoading] = useState(true);
   const [dataPaymentMethod, setDataPaymentMethods] = useState([]);
@@ -57,14 +60,29 @@ const Payment = () => {
         fullName: value.fullName,
         paymentMethodId: selectedPayment,
         phoneNumber: value.phoneNumber,
-        seatNum: seatNum[0],
+        seatNum: seatNum,
         total,
         bookingTime,
       };
       await dispatch(transactionAction({dataTrx}));
-      navigation.navigate('Profile');
+      Alert.alert(
+        'Order Success ✔️',
+        'You can check your ticket results in the order history section in your profile',
+        [
+          {
+            text: 'Ok',
+            onPress: () => navigation.navigate('TabBottom'),
+            style: 'default',
+          },
+          // {
+          //   text: 'Back to home',
+          //   onPress: () => navigation.navigate('Home'),
+          //   style: 'default',
+          // },
+        ],
+      );
     } else {
-      console.log('Isi dulu payment method');
+      ToastAndroid.show('Please choose payment method', ToastAndroid.SHORT);
     }
   };
 
@@ -85,7 +103,6 @@ const Payment = () => {
 
   return (
     <Stack direction={'column'} backgroundColor={'#161621'} flex={1}>
-      <MainHeader />
       <HStack backgroundColor={'#28907D'} padding={4} borderBottomRadius={15}>
         <Text flex={1} color={'white'} fontSize={18}>
           Total Payment
@@ -101,32 +118,40 @@ const Payment = () => {
           </Text>
           <VStack backgroundColor={'#0A2647'} padding={3} borderRadius={8}>
             <HStack flexWrap={'wrap'} ml={'10px'} mt={2}>
-              {dataPaymentMethod?.map(item => (
-                <Pressable
-                  onPress={() => setSelectedPayment(item.id)}
-                  key={item.id}>
-                  <Box
-                    backgroundColor={
-                      selectedPayment === item.id ? '#28907D' : 'white'
-                    }
-                    padding={2}
-                    marginBottom={2}
-                    marginRight={2}
-                    borderRadius={8}>
-                    <Image
-                      source={{
-                        uri:
-                          'https://fw12-backend-orcin.vercel.app/uploads/' +
-                          item.picture,
-                      }}
-                      width={'80px'}
-                      height={'30px'}
-                      alt={item.name}
-                      resizeMode={'contain'}
-                    />
-                  </Box>
-                </Pressable>
-              ))}
+              {!isLoading ? (
+                <HStack space={4}>
+                  <Skeleton w={'90px'} h={'40px'} borderRadius={8} />
+                  <Skeleton w={'90px'} h={'40px'} borderRadius={8} />
+                  <Skeleton w={'90px'} h={'40px'} borderRadius={8} />
+                </HStack>
+              ) : (
+                dataPaymentMethod?.map(item => (
+                  <Pressable
+                    onPress={() => setSelectedPayment(item.id)}
+                    key={item.id}>
+                    <Box
+                      backgroundColor={
+                        selectedPayment === item.id ? '#28907D' : 'white'
+                      }
+                      padding={2}
+                      marginBottom={2}
+                      marginRight={2}
+                      borderRadius={8}>
+                      <Image
+                        source={{
+                          uri:
+                            'https://fw12-backend-orcin.vercel.app/uploads/' +
+                            item.picture,
+                        }}
+                        width={'80px'}
+                        height={'30px'}
+                        alt={item.name}
+                        resizeMode={'contain'}
+                      />
+                    </Box>
+                  </Pressable>
+                ))
+              )}
             </HStack>
             <HStack alignItems={'center'} mt={4}>
               <Box
@@ -218,12 +243,12 @@ const Payment = () => {
                         color={'white'}
                         fontSize={15}
                       />
-                      {errors.phoneNumber && (
+                      {errors.email && (
                         <FormControl.ErrorMessage
                           leftIcon={
                             <Icon name="alert-circle" size={18} color="red" />
                           }>
-                          {errors.phoneNumber}
+                          {errors.email}
                         </FormControl.ErrorMessage>
                       )}
                     </FormControl>
@@ -269,7 +294,7 @@ const Payment = () => {
                 </VStack>
                 <Box mt={5}>
                   <Button
-                    isLoading={!isLoading}
+                    isLoading={!isLoadingBtn}
                     onPress={handleSubmit}
                     background={'#28907D'}
                     borderRadius={8}

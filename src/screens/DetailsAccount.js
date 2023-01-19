@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Avatar,
   Box,
@@ -13,9 +13,15 @@ import {
   HStack,
   Spinner,
   useToast,
+  Modal,
+  Image,
 } from 'native-base';
 // import {ToastAndroid} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Feather';
+import avatarIcon from '../img/avatar.jpg';
+import galeryIcon from '../img/galery.png';
+import cameraIcon from '../img/camera.png';
+
 import Footer from '../components/Footer';
 import {useDispatch, useSelector} from 'react-redux';
 import {logoutAction} from '../redux/reducers/auth';
@@ -26,9 +32,12 @@ import YupPassword from 'yup-password';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import http from '../helpers/http';
-import {TouchableOpacity} from 'react-native';
+import {BackHandler, TouchableOpacity} from 'react-native';
 import Feather from 'react-native-vector-icons/dist/Feather';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {Alert} from 'react-native';
+import {ToastAndroid} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 YupPassword(Yup); // extend yup
 
 const detailsAccountSchema = Yup.object({
@@ -58,17 +67,19 @@ const updatePasswordSchema = Yup.object({
 });
 
 const DetailsAccount = () => {
+  const navigation = useNavigation();
+
   const [showOne, setShowOne] = React.useState(false);
   const [showTwo, setShowTwo] = React.useState(false);
   const [isLoadingOne, setIsLoadingOne] = React.useState(true);
   const [isLoadingTwo, setIsLoadingTwo] = React.useState(true);
   const [isLoadingPicture, setIsLoadingPicture] = React.useState(true);
+  const [showModal, setShowModal] = React.useState(false);
 
   const {user} = useSelector(state => state.profile);
   const {token} = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
-  const toast = useToast();
 
   const doUpdatePassword = async value => {
     if (value.password === value.confirmPassword) {
@@ -80,18 +91,12 @@ const DetailsAccount = () => {
         setIsLoadingTwo(false);
         const {data} = await http(token).patch('/profile', form);
         setIsLoadingTwo(true);
-        toast.show({
-          title: data.message,
-          placement: 'top',
-        });
+        ToastAndroid.show('Password Updated', ToastAndroid.SHORT);
       } catch (err) {
         console.log(err);
       }
     } else {
-      toast.show({
-        title: 'Password and Confirm Password not matches',
-        placement: 'top',
-      });
+      ToastAndroid.show('Password Not Matches', ToastAndroid.SHORT);
     }
   };
 
@@ -107,21 +112,19 @@ const DetailsAccount = () => {
       const {data} = await http(token).patch('/profile', form);
       await dispatch(getProfileAction());
       setIsLoadingOne(true);
-      toast.show({
-        title: data.message,
-        placement: 'top',
-      });
+      ToastAndroid.show(data.message, ToastAndroid.SHORT);
     } catch (err) {
       throw err.response.data.message;
     }
   };
 
-  const doUpdateProfile = async () => {
-    const {assets} = await launchImageLibrary();
+  const doUpdateProfileCamera = async () => {
+    const {assets} = await launchCamera();
+    // console.log(assets);
     if (assets) {
       const [result] = assets;
       const size = parseInt(result.fileSize);
-      if (size <= 400000) {
+      if (size <= 2000000) {
         try {
           const obj = {
             name: result.fileName,
@@ -138,27 +141,82 @@ const DetailsAccount = () => {
           });
           await dispatch(getProfileAction());
           setIsLoadingPicture(true);
-          toast.show({
-            title: data.message,
-            placement: 'top',
-          });
+          ToastAndroid.show(data.message, ToastAndroid.SHORT);
         } catch (err) {
           console.log(err.message);
           setIsLoadingPicture(true);
         }
       } else {
-        toast.show({
-          title: 'Max size 4mb,',
-          placement: 'top',
-        });
+        ToastAndroid.show('Max size 2mb', ToastAndroid.SHORT);
+      }
+    }
+  };
+  const doUpdateProfileGalery = async () => {
+    const {assets} = await launchImageLibrary();
+    if (assets) {
+      const [result] = assets;
+      const size = parseInt(result.fileSize);
+      if (size <= 2000000) {
+        try {
+          const obj = {
+            name: result.fileName,
+            type: result.type,
+            uri: result.uri,
+          };
+          const form = new FormData();
+          form.append('picture', obj);
+          setIsLoadingPicture(false);
+          const {data} = await http(token).patch('/profile', form, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          await dispatch(getProfileAction());
+          setIsLoadingPicture(true);
+          ToastAndroid.show(data.message, ToastAndroid.SHORT);
+        } catch (err) {
+          console.log(err.message);
+          setIsLoadingPicture(true);
+        }
+      } else {
+        ToastAndroid.show('Max size 2mb', ToastAndroid.SHORT);
       }
     }
   };
 
   function actionCreator() {
-    dispatch(logoutAction());
-    dispatch(clearProfileAction());
+    Alert.alert('Logging out', 'Are you sure?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          dispatch(logoutAction());
+          dispatch(clearProfileAction());
+        },
+      },
+    ]);
   }
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'TabBottom'}],
+      });
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
 
   return (
     <Stack direction={'column'} backgroundColor={'#161621'} flex={1}>
@@ -169,12 +227,12 @@ const DetailsAccount = () => {
               Info
             </Text>
             <Box alignItems={'center'} mt={7}>
-              <TouchableOpacity onPress={() => doUpdateProfile()}>
+              <TouchableOpacity onPress={() => setShowModal(true)}>
                 <Box position={'relative'}>
                   {user?.picture ? (
                     <Avatar size={'120px'} source={{uri: user.picture}} />
                   ) : (
-                    <Avatar size={'120px'} />
+                    <Avatar size={'120px'} source={avatarIcon} />
                   )}
                   {!isLoadingPicture && (
                     <Spinner
@@ -525,6 +583,41 @@ const DetailsAccount = () => {
 
         <Footer />
       </ScrollView>
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <Modal.Content maxWidth="400px">
+          <Modal.CloseButton />
+          <Modal.Header>Change Photo Profile</Modal.Header>
+          <Modal.Body>
+            <Text>Choose Photo Via :</Text>
+            <HStack
+              justifyContent={'center'}
+              alignItems={'center'}
+              space={7}
+              py={5}>
+              <TouchableOpacity
+                onPress={() => {
+                  doUpdateProfileGalery();
+                  setShowModal(false);
+                }}>
+                <VStack justifyContent={'center'} alignItems={'center'}>
+                  <Image source={galeryIcon} alt="galery" size="sm" />
+                  <Text>Open Galery</Text>
+                </VStack>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  doUpdateProfileCamera();
+                  setShowModal(false);
+                }}>
+                <VStack justifyContent={'center'} alignItems={'center'}>
+                  <Image source={cameraIcon} alt="galery" size="sm" />
+                  <Text>Open Camera</Text>
+                </VStack>
+              </TouchableOpacity>
+            </HStack>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
     </Stack>
   );
 };

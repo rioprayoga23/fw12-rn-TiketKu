@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import {
   Stack,
   VStack,
@@ -7,16 +8,53 @@ import {
   HStack,
   Text,
   ScrollView,
+  Skeleton,
 } from 'native-base';
-import React from 'react';
 import Footer from '../components/Footer';
 import MainHeader from '../components/MainHeader';
 import QrCode from '../img/qr.png';
+import http from '../helpers/http';
+import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {BackHandler} from 'react-native';
 
-const TicketResult = () => {
+const TicketResult = ({route}) => {
+  const trxId = route?.params?.id;
+  const [dataTicket, setDataTicket] = useState({});
+  const {token} = useSelector(state => state.auth);
+  const [isLoading, setIsloading] = useState(true);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const getTicket = async () => {
+      try {
+        setIsloading(false);
+        const {data} = await http(token).get(`/ticket/${trxId}`);
+        setDataTicket(data.results);
+        setIsloading(true);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getTicket();
+  }, [trxId, token]);
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
+
   return (
     <Stack direction={'column'} backgroundColor={'#161621'} flex={1}>
-      <MainHeader />
       <ScrollView showsVerticalScrollIndicator={false}>
         <VStack
           backgroundColor={'#28907D'}
@@ -50,57 +88,83 @@ const TicketResult = () => {
             </Stack>
             <Stack space={5} marginTop={'80px'}>
               <HStack paddingX={5}>
-                <Box width={'50%'}>
+                <Box width={'50%'} marginRight={4}>
                   <Text color={'#0A2647'} fontSize={15}>
                     Movie
                   </Text>
-                  <Text color={'white'} fontSize={18} fontWeight={'500'}>
-                    Spider-Man: Homecoming
-                  </Text>
+                  {!isLoading ? (
+                    <Skeleton.Text lines={2} w={100} />
+                  ) : (
+                    <Text color={'white'} fontSize={18} fontWeight={'500'}>
+                      {dataTicket?.title}
+                    </Text>
+                  )}
                 </Box>
                 <Box width={'50%'}>
                   <Text color={'#0A2647'} fontSize={15}>
                     Category
                   </Text>
-                  <Text color={'white'} fontSize={18} fontWeight={'500'}>
-                    Action, Adventure, Action
-                  </Text>
+                  {!isLoading ? (
+                    <Skeleton.Text lines={2} w={100} />
+                  ) : (
+                    <Text color={'white'} fontSize={18} fontWeight={'500'}>
+                      {dataTicket?.genre}
+                    </Text>
+                  )}
                 </Box>
               </HStack>
               <HStack paddingX={5}>
-                <Box width={'50%'}>
+                <Box width={'50%'} marginRight={4}>
                   <Text color={'#0A2647'} fontSize={15}>
                     Date
                   </Text>
-                  <Text color={'white'} fontSize={18} fontWeight={'500'}>
-                    07 Jul
-                  </Text>
+                  {!isLoading ? (
+                    <Skeleton.Text lines={2} w={100} />
+                  ) : (
+                    <Text color={'white'} fontSize={18} fontWeight={'500'}>
+                      {new Date(dataTicket?.bookingDate).getFullYear()}-
+                      {new Date(dataTicket?.bookingDate).getMonth()}1-
+                      {new Date(dataTicket?.bookingDate).getDate()}
+                    </Text>
+                  )}
                 </Box>
                 <Box width={'50%'}>
                   <Text color={'#0A2647'} fontSize={15}>
                     Time
                   </Text>
-                  <Text color={'white'} fontSize={18} fontWeight={'500'}>
-                    2:00pm
-                  </Text>
+                  {!isLoading ? (
+                    <Skeleton.Text lines={2} w={100} />
+                  ) : (
+                    <Text color={'white'} fontSize={18} fontWeight={'500'}>
+                      {dataTicket?.bookingTime}
+                    </Text>
+                  )}
                 </Box>
               </HStack>
               <HStack paddingX={5}>
-                <Box width={'50%'}>
+                <Box width={'50%'} marginRight={4}>
                   <Text color={'#0A2647'} fontSize={15}>
                     Count
                   </Text>
-                  <Text color={'white'} fontSize={18} fontWeight={'500'}>
-                    3 pcs
-                  </Text>
+                  {!isLoading ? (
+                    <Skeleton.Text lines={2} w={100} />
+                  ) : (
+                    <Text color={'white'} fontSize={18} fontWeight={'500'}>
+                      {dataTicket?.count}
+                    </Text>
+                  )}
                 </Box>
                 <Box width={'50%'}>
                   <Text color={'#0A2647'} fontSize={15}>
                     Seats
                   </Text>
-                  <Text color={'white'} fontSize={18} fontWeight={'500'}>
-                    C4, C5, C6
-                  </Text>
+                  {!isLoading ? (
+                    <Skeleton.Text lines={2} w={100} />
+                  ) : (
+                    <Text color={'white'} fontSize={18} fontWeight={'500'}>
+                      {dataTicket?.seatNum}
+                    </Text>
+                  )}
                 </Box>
               </HStack>
 
@@ -114,9 +178,13 @@ const TicketResult = () => {
                 <Text color={'white'} fontSize={20} flex={1}>
                   Total
                 </Text>
-                <Text color={'#0A2647'} fontSize={22} fontWeight={'bold'}>
-                  $30.00
-                </Text>
+                {!isLoading ? (
+                  <Skeleton.Text lines={1} w={100} />
+                ) : (
+                  <Text color={'white'} fontSize={18} fontWeight={'500'}>
+                    {dataTicket?.total}
+                  </Text>
+                )}
               </HStack>
             </Stack>
           </Stack>

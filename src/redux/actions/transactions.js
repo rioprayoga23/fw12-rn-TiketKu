@@ -3,14 +3,14 @@ import http from '../../helpers/http';
 
 export const transactionAction = createAsyncThunk(
   'transaction/createTransaction',
-  async ({dataTrx}, {getState}) => {
+  async ({dataTrx, cb}, {getState}) => {
     const {token} = getState().auth;
     try {
       const {data} = await http(token).post(
         '/transactions/createOrder',
         dataTrx,
       );
-      return data;
+      return data.results;
     } catch (err) {
       throw err.response.data.message;
     }
