@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getProfileAction} from '../redux/actions/profile';
 import Icon from 'react-native-vector-icons/dist/Feather';
 
-import avatarIcon from '../img/avatar.jpg';
+import avatarIcon from '../assets/img/avatar.jpg';
 
 const MainHeader = () => {
   const navigation = useNavigation();

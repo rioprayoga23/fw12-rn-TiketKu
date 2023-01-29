@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
 
-import logoTiketKu from '../img/Tickitz.png';
+import logoTiketKu from '../assets/img/Tickitz.png';
 
 const HeaderAuth = props => {
   return (
     <>
-      <Image source={logoTiketKu} style={{width: 190, height: 80}} />
+      <Image source={logoTiketKu} style={{width: 190, height: 60}} />
       <View style={styles.header}>
         <Text style={[styles.title, styles.colorPrimary]}>{props.title}</Text>
         <Text style={[styles.subTitle, styles.colorGray]}>

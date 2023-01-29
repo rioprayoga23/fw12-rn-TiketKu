@@ -7,7 +7,7 @@ const CardMovie = ({data}) => {
     <View style={styles.cardMovie}>
       <Image
         source={{
-          uri: 'https://fw12-backend-orcin.vercel.app/uploads/' + data.picture,
+          uri: data.picture,
         }}
         alt={data.title}
         width={122}

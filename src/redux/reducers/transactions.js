@@ -7,6 +7,7 @@ const initialState = {
   title: null,
   cinemaId: null,
   cinemaName: null,
+  cinemaPicture: null,
   bookingDate: null,
   bookingTime: null,
   price: null,
@@ -30,6 +31,7 @@ const transactionsReducer = createSlice({
       state.title = action.payload.title;
       state.cinemaId = action.payload.cinemaId;
       state.cinemaName = action.payload.cinemaName;
+      state.cinemaPicture = action.payload.cinemaPicture;
       state.bookingDate = action.payload.bookingDate;
       state.bookingTime = action.payload.bookingTime;
       state.price = action.payload.price;

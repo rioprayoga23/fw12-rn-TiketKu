@@ -71,7 +71,7 @@ const Payment = () => {
         [
           {
             text: 'Ok',
-            onPress: () => navigation.navigate('TabBottom'),
+            onPress: () => navigation.navigate('Profile'),
             style: 'default',
           },
           // {
@@ -108,7 +108,9 @@ const Payment = () => {
           Total Payment
         </Text>
         <Text color={'white'} fontSize={18} fontWeight={'bold'}>
-          {total}
+          {`Rp.${Intl.NumberFormat('id-ID', {
+            currency: 'IDR',
+          }).format(total)}`}
         </Text>
       </HStack>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -139,9 +141,7 @@ const Payment = () => {
                       borderRadius={8}>
                       <Image
                         source={{
-                          uri:
-                            'https://fw12-backend-orcin.vercel.app/uploads/' +
-                            item.picture,
+                          uri: item.picture,
                         }}
                         width={'80px'}
                         height={'30px'}

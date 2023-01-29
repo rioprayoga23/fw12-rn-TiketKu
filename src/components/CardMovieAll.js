@@ -6,7 +6,7 @@ const CardMovieAll = ({data}) => {
     <View style={styles.cardMovie}>
       <Image
         source={{
-          uri: 'https://fw12-backend-orcin.vercel.app/uploads/' + data.picture,
+          uri: data.picture,
         }}
         resizeMode={'contain'}
         style={{width: 140, height: 220}}

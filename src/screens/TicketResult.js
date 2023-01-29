@@ -11,8 +11,7 @@ import {
   Skeleton,
 } from 'native-base';
 import Footer from '../components/Footer';
-import MainHeader from '../components/MainHeader';
-import QrCode from '../img/qr.png';
+import QrCode from '../assets/img/qr.png';
 import http from '../helpers/http';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -136,7 +135,13 @@ const TicketResult = ({route}) => {
                     <Skeleton.Text lines={2} w={100} />
                   ) : (
                     <Text color={'white'} fontSize={18} fontWeight={'500'}>
-                      {dataTicket?.bookingTime}
+                      {new Date(
+                        `2023-03-03 ${dataTicket?.bookingTime}`,
+                      ).toLocaleString('en-US', {
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true,
+                      })}
                     </Text>
                   )}
                 </Box>
@@ -182,7 +187,9 @@ const TicketResult = ({route}) => {
                   <Skeleton.Text lines={1} w={100} />
                 ) : (
                   <Text color={'white'} fontSize={18} fontWeight={'500'}>
-                    {dataTicket?.total}
+                    {`Rp.${Intl.NumberFormat('id-ID', {
+                      currency: 'IDR',
+                    }).format(dataTicket.total)}`}
                   </Text>
                 )}
               </HStack>

@@ -11,9 +11,7 @@ import {
   View,
   VStack,
 } from 'native-base';
-import MainHeader from '../components/MainHeader';
 import Icon from 'react-native-vector-icons/dist/Feather';
-import LogoEbu from '../img/ebu.png';
 import Footer from '../components/Footer';
 import {useDispatch, useSelector} from 'react-redux';
 import {chooseSeat} from '../redux/reducers/transactions';
@@ -25,6 +23,7 @@ const Order = () => {
   const {bookingDate} = useSelector(state => state.transactions);
   const {title} = useSelector(state => state.transactions);
   const {cinemaName} = useSelector(state => state.transactions);
+  const {cinemaPicture} = useSelector(state => state.transactions);
 
   const [selectedSeat, setSelectedSeat] = useState([]);
 
@@ -175,7 +174,12 @@ const Order = () => {
           </Text>
           <VStack backgroundColor={'#0A2647'} padding={5} borderRadius={8}>
             <VStack alignItems={'center'} space={2} mb={7}>
-              <Image source={LogoEbu} alt={'logoEbu'} />
+              <Image
+                source={{uri: cinemaPicture}}
+                width={90}
+                height={25}
+                alt={'logoEbu'}
+              />
               <Text color={'white'} fontSize={24}>
                 {cinemaName}
               </Text>
@@ -189,7 +193,14 @@ const Order = () => {
                   {bookingDate}
                 </Text>
                 <Text fontSize={18} color={'white'}>
-                  {bookingTime}
+                  {new Date(`2023-03-03 ${bookingTime}`).toLocaleString(
+                    'en-US',
+                    {
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true,
+                    },
+                  )}
                 </Text>
               </HStack>
               <HStack>
@@ -197,7 +208,9 @@ const Order = () => {
                   One ticket price
                 </Text>
                 <Text fontSize={18} color={'white'}>
-                  {price}
+                  {`Rp.${Intl.NumberFormat('id-ID', {
+                    currency: 'IDR',
+                  }).format(price)}/seat`}
                 </Text>
               </HStack>
               <HStack>
@@ -212,12 +225,14 @@ const Order = () => {
               </HStack>
             </VStack>
             <Box borderBottomColor={'white'} borderBottomWidth={0.8} my={5} />
-            <HStack>
+            <HStack alignItems={'center'}>
               <Text flex={1} color={'#AAA'} fontSize={20}>
                 Total Payment
               </Text>
-              <Text fontSize={25} color={'#28907D'}>
-                {selectedSeat?.length * price}
+              <Text fontSize={20} color={'#28907D'}>
+                {`Rp.${Intl.NumberFormat('id-ID', {
+                  currency: 'IDR',
+                }).format(selectedSeat?.length * price)}/seat`}
               </Text>
             </HStack>
           </VStack>

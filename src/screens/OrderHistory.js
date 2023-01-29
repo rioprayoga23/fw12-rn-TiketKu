@@ -9,7 +9,6 @@ import {
 } from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
-import LogoEbu from '../img/ebu.png';
 import shortid from 'shortid';
 import http from '../helpers/http';
 import {useNavigation} from '@react-navigation/native';
@@ -40,12 +39,20 @@ const OrderHistory = () => {
               onPress={() => navigation.navigate('TicketResult', {id: item.id})}
               key={shortid.generate().toString()}>
               <Box backgroundColor={'#0A2647'} padding={5} borderRadius={8}>
-                <Image source={LogoEbu} alt="ebu" />
+                <Image source={{uri: item?.picture}} alt="ebu" />
                 <Text color={'white'} fontSize={15} mt={5}>
                   {`${new Date(item?.bookingDate).getFullYear()}-${new Date(
                     item?.bookingDate,
                   ).getMonth()}1-${new Date(item?.bookingDate).getDate()}`}{' '}
-                  - {item?.bookingTime}
+                  -{' '}
+                  {new Date(`2023-03-03 ${item.bookingTime}`).toLocaleString(
+                    'en-US',
+                    {
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true,
+                    },
+                  )}
                 </Text>
                 <Text color={'white'} fontSize={22} mt={1} mb={9}>
                   {item.title}

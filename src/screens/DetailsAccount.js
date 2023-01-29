@@ -12,15 +12,14 @@ import {
   Button,
   HStack,
   Spinner,
-  useToast,
   Modal,
   Image,
 } from 'native-base';
-// import {ToastAndroid} from 'react-native';
+
 import Icon from 'react-native-vector-icons/dist/Feather';
-import avatarIcon from '../img/avatar.jpg';
-import galeryIcon from '../img/galery.png';
-import cameraIcon from '../img/camera.png';
+import avatarIcon from '../assets/img/avatar.jpg';
+import galeryIcon from '../assets/img/galery.png';
+import cameraIcon from '../assets/img/camera.png';
 
 import Footer from '../components/Footer';
 import {useDispatch, useSelector} from 'react-redux';
@@ -276,11 +275,7 @@ const DetailsAccount = () => {
             </Text>
 
             <Formik
-              initialValues={{
-                firstName: '',
-                lastName: '',
-                email: '',
-              }}
+              initialValues={{}}
               validationSchema={detailsAccountSchema}
               onSubmit={doUpdateAccount}>
               {({
@@ -318,7 +313,6 @@ const DetailsAccount = () => {
                             variant="outline"
                             p={2}
                             defaultValue={user.firstName}
-                            placeholder={user.firstName}
                             placeholderTextColor={'white'}
                             color={'white'}
                             fontSize={15}
@@ -348,7 +342,6 @@ const DetailsAccount = () => {
                             variant="outline"
                             p={2}
                             defaultValue={user.lastName}
-                            placeholder={user.lastName}
                             placeholderTextColor={'white'}
                             color={'white'}
                             fontSize={15}
@@ -378,7 +371,6 @@ const DetailsAccount = () => {
                             variant="outline"
                             p={2}
                             defaultValue={user.phoneNumber}
-                            placeholder={user.phoneNumber}
                             placeholderTextColor={'white'}
                             color={'white'}
                             fontSize={15}
@@ -407,7 +399,6 @@ const DetailsAccount = () => {
                             variant="outline"
                             p={2}
                             defaultValue={user.email}
-                            placeholder={user.email}
                             placeholderTextColor={'white'}
                             color={'white'}
                             fontSize={15}

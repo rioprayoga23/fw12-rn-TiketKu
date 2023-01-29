@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import MainHeader from '../components/MainHeader';
-import imgSipderman from '../img/spiderman.jpg';
-import imgJoker from '../img/joker.jpg';
-import imgThor from '../img/Thor.png';
+import imgSipderman from '../assets/img/spiderman.jpg';
+import imgJoker from '../assets/img/joker.jpg';
+import imgThor from '../assets/img/Thor.png';
 import BtnMonth from '../components/BtnMonth';
 import {Button, Input} from '@rneui/themed';
 import CardMovie from '../components/CardMovie';

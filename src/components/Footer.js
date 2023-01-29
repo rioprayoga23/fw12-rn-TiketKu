@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 
 import Icon from 'react-native-vector-icons/dist/Feather';
-import logoTiketKu from '../img/Tickitz.png';
+import logoTiketKu from '../assets/img/Tickitz.png';
 
 const Footer = () => {
   return (

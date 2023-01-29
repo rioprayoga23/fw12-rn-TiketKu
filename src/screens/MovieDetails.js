@@ -20,7 +20,6 @@ import {useDispatch} from 'react-redux';
 
 import Icon from 'react-native-vector-icons/dist/Feather';
 import Footer from '../components/Footer';
-import logoEbu from '../img/ebu.png';
 import {chooseMovie} from '../redux/reducers/transactions';
 import {useNavigation} from '@react-navigation/native';
 import shortid from 'shortid';
@@ -82,7 +81,7 @@ const MovieDetails = ({route}) => {
     setSelectedCinema(cinema);
   };
 
-  const doBook = async (price, cinemaName) => {
+  const doBook = async (price, cinemaName, cinemaPicture) => {
     setIsLoadingBtn(false);
     await dispatch(
       chooseMovie({
@@ -93,6 +92,7 @@ const MovieDetails = ({route}) => {
         bookingDate: dateFormat(date),
         bookingTime: selectedTime,
         price: price,
+        cinemaPicture,
       }),
     );
     setIsLoadingBtn(true);
@@ -140,13 +140,12 @@ const MovieDetails = ({route}) => {
           ) : (
             <Image
               source={{
-                uri: `https://fw12-backend-orcin.vercel.app/uploads/${dataMovies?.picture}`,
+                uri: dataMovies?.picture,
               }}
               style={{
                 width: 152,
                 height: 220,
                 resizeMode: 'contain',
-                borderRadius: 8,
               }}
             />
           )}
@@ -321,7 +320,16 @@ const MovieDetails = ({route}) => {
                 <VStack key={shortid.generate().toString()}>
                   <Box backgroundColor={'#0A2647'} borderRadius={8} padding={5}>
                     <VStack space={3} alignItems={'center'}>
-                      <Image source={logoEbu} alt="ebu" />
+                      <Image
+                        source={{
+                          uri: cinema?.picture,
+                        }}
+                        style={{
+                          width: 90,
+                          height: 25,
+                          resizeMode: 'contain',
+                        }}
+                      />
                       <Text color="white" fontSize={18} textAlign="center">
                         {cinema.city}
                       </Text>
@@ -350,7 +358,14 @@ const MovieDetails = ({route}) => {
                             fontWeight={'bold'}
                             fontSize={15}
                             marginBottom={4}>
-                            {time}
+                            {new Date(`2023-03-03 ${time}`).toLocaleString(
+                              'en-US',
+                              {
+                                hour: 'numeric',
+                                minute: 'numeric',
+                                hour12: true,
+                              },
+                            )}
                           </Text>
                         </Pressable>
                       ))}
@@ -366,14 +381,18 @@ const MovieDetails = ({route}) => {
                           color={'#28907D'}
                           fontSize={22}
                           fontWeight={'bold'}>
-                          {cinema.price}/seat
+                          {`Rp.${Intl.NumberFormat('id-ID', {
+                            currency: 'IDR',
+                          }).format(cinema.price)}/seat`}
                         </Text>
                       </HStack>
                     </HStack>
                     <Button
                       isLoading={!isLoadingBtn}
                       isDisabled={selectedCinema !== cinema.id}
-                      onPress={() => doBook(cinema.price, cinema.name)}
+                      onPress={() =>
+                        doBook(cinema.price, cinema.name, cinema.picture)
+                      }
                       backgroundColor={'#28907D'}
                       marginTop={10}>
                       Book Now
