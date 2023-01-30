@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "TiketKuApp.app"
-               BlueprintName = "TiketKuApp"
-               ReferencedContainer = "container:TiketKuApp.xcodeproj">
+               BuildableName = "TiketKu.app"
+               BlueprintName = "TiketKu"
+               ReferencedContainer = "container:TiketKu.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "TiketKuAppTests.xctest"
-               BlueprintName = "TiketKuAppTests"
-               ReferencedContainer = "container:TiketKuApp.xcodeproj">
+               BuildableName = "TiketKuTests.xctest"
+               BlueprintName = "TiketKuTests"
+               ReferencedContainer = "container:TiketKu.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "TiketKuApp.app"
-            BlueprintName = "TiketKuApp"
-            ReferencedContainer = "container:TiketKuApp.xcodeproj">
+            BuildableName = "TiketKu.app"
+            BlueprintName = "TiketKu"
+            ReferencedContainer = "container:TiketKu.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "TiketKuApp.app"
-            BlueprintName = "TiketKuApp"
-            ReferencedContainer = "container:TiketKuApp.xcodeproj">
+            BuildableName = "TiketKu.app"
+            BlueprintName = "TiketKu"
+            ReferencedContainer = "container:TiketKu.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,4 +1,4 @@
-package com.tiketkuapp.newarchitecture.components;
+package com.rioprayoga.tiketku.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

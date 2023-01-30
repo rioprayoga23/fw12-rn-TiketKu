@@ -1,4 +1,4 @@
-package com.tiketkuapp.newarchitecture;
+package com.rioprayoga.tiketku.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.tiketkuapp.BuildConfig;
-import com.tiketkuapp.newarchitecture.components.MainComponentsRegistry;
-import com.tiketkuapp.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.rioprayoga.tiketku.BuildConfig;
+import com.rioprayoga.tiketku.newarchitecture.components.MainComponentsRegistry;
+import com.rioprayoga.tiketku.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

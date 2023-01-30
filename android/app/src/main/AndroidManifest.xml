@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.tiketkuapp">
+  package="com.rioprayoga.tiketku">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
