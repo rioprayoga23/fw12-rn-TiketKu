@@ -3,6 +3,10 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 
 import Icon from 'react-native-vector-icons/dist/Feather';
 import logoTiketKu from '../assets/img/Tickitz.png';
+import sponsor1 from '../assets/img/cine.png';
+import sponsor2 from '../assets/img/hiflix.png';
+import sponsor3 from '../assets/img/ebu.png';
+import {HStack, VStack} from 'native-base';
 
 const Footer = () => {
   return (
@@ -20,20 +24,20 @@ const Footer = () => {
       </View>
       <View>
         <Text style={styles.headingFooter}>Our Sponsor</Text>
-        <View style={{flexDirection: 'row'}}>
+        <VStack space={5}>
           <Image
-            source={logoTiketKu}
-            style={{width: 100, height: 30, marginRight: 15}}
+            source={sponsor1}
+            style={{width: 130, height: 20, marginRight: 15}}
           />
           <Image
-            source={logoTiketKu}
-            style={{width: 100, height: 30, marginRight: 15}}
+            source={sponsor2}
+            style={{width: 90, height: 25, marginRight: 15}}
           />
           <Image
-            source={logoTiketKu}
-            style={{width: 100, height: 30, marginRight: 15}}
+            source={sponsor3}
+            style={{width: 95, height: 35, marginRight: 15}}
           />
-        </View>
+        </VStack>
       </View>
       <View>
         <Text style={styles.headingFooter}>Follow Us</Text>

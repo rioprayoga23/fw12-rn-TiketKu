@@ -26,6 +26,7 @@ import * as Yup from 'yup';
 import YupPassword from 'yup-password';
 import {Formik} from 'formik';
 import {transactionAction} from '../redux/actions/transactions';
+import PushNotification from 'react-native-push-notification';
 YupPassword(Yup); // extend yup
 
 const personalInfoSchema = Yup.object({
@@ -81,6 +82,12 @@ const Payment = () => {
           // },
         ],
       );
+      PushNotification.localNotification({
+        channelId: 'global_notif',
+        title: 'success',
+        message: 'Your seat has been reserved, we wait for you!',
+      });
+      
     } else {
       ToastAndroid.show('Please choose payment method', ToastAndroid.SHORT);
     }

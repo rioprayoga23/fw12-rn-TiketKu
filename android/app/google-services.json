@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "980620241293",
+    "project_id": "tiketku-bb751",
+    "storage_bucket": "tiketku-bb751.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980620241293:android:8a02d7d408c96239bc75c4",
+        "android_client_info": {
+          "package_name": "com.rioprayoga.tiketku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "980620241293-fnf3ekogofogtrljjbf5ga134n7m70cu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPt0UBOExmJ1nZb7pj2SSaZHWpOiw3KzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "980620241293-fnf3ekogofogtrljjbf5ga134n7m70cu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
