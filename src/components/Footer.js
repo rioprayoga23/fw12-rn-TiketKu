@@ -6,7 +6,7 @@ import logoTiketKu from '../assets/img/Tickitz.png';
 import sponsor1 from '../assets/img/cine.png';
 import sponsor2 from '../assets/img/hiflix.png';
 import sponsor3 from '../assets/img/ebu.png';
-import {HStack, VStack} from 'native-base';
+import {VStack} from 'native-base';
 
 const Footer = () => {
   return (
@@ -31,7 +31,7 @@ const Footer = () => {
           />
           <Image
             source={sponsor2}
-            style={{width: 90, height: 25, marginRight: 15}}
+            style={{width: 85, height: 26, marginRight: 15}}
           />
           <Image
             source={sponsor3}
