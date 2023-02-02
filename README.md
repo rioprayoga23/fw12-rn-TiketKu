@@ -1,5 +1,5 @@
 # TiketKu
-
+![3](https://user-images.githubusercontent.com/105056679/216304968-f631a4be-1f90-46d3-beee-f62de22d1636.png)
 
 # About Project
 
